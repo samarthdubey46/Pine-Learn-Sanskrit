@@ -1,0 +1,8 @@
+MainStackNavigator:
+  Login:
+  Register:
+  BottomNavigator:
+    Learn
+    Discover
+    Badges
+    Friends
