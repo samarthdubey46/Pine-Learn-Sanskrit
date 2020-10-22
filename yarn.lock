@@ -1025,6 +1025,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@react-native-async-storage/async-storage@^1.13.0":
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.13.0.tgz#7b26b04fd2acf95353e7697927939817e46d3166"
+  integrity sha512-c+pKuUe54sysxnqsfG17kaAcd9xJQyTNYDQhZhYf3Ej5khAQPPM85eN2nc1sj1qEnxDde4mcfi3slrOd/KtoSw==
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.9.0.tgz#4177764ba69243c97aa26829d59d9501acb2bd71"
@@ -2378,6 +2385,13 @@ decode-uri-component@^0.2.0:
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
 
+deep-assign@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/deep-assign/-/deep-assign-3.0.0.tgz#c8e4c4d401cba25550a2f0f486a2e75bc5f219a2"
+  integrity sha512-YX2i9XjJ7h5q/aQ/IM9PEwEnDqETAIYbggmdDB3HLTlSgo1CxPsj6pvhPG68rq6SVE0+p+6Ywsm5fTYNrYtBWw==
+  dependencies:
+    is-obj "^1.0.0"
+
 deep-is@^0.1.3, deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
@@ -3670,6 +3684,11 @@ is-number@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
+
+is-obj@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
+  integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
 
 is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"
@@ -5759,6 +5778,14 @@ react-native-dynamic-vector-icons@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/react-native-dynamic-vector-icons/-/react-native-dynamic-vector-icons-1.1.4.tgz#a6dffbe0b71e4b26b34fd61e906e8a1d050f22ed"
   integrity sha512-c+uxIphgMlJnjluleJw3nzww3UGVg/STUoRBmbFEFzy/LwQXOJHYJXsdsLRu4I1FcV7jK4A/8BMZBO4fFqFPTw==
+
+react-native-flash-message@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.16.tgz#4f23c8c60927ed3c325d90f1a4c1bbe0923a4ba6"
+  integrity sha512-d+c6zWQDNvnZ5S0BDa10yB/0/rLMXTtYYjIOyad0Y+/G6h289qB1Hyc9twgvrpv/fEaKW+m5vxCBGHustII+rA==
+  dependencies:
+    prop-types "^15.7.2"
+    react-native-iphone-x-helper "^1.2.1"
 
 react-native-gesture-handler@^1.8.0:
   version "1.8.0"

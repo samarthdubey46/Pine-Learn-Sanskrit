@@ -27,6 +27,7 @@ const ThemeProvider = (props) => {
     const [Themes, changeTheme] = useState(light_style)
     const [IsLogged,changeIsLogged] = useState(false)
     const [CurrentLevel,changeCurrentLevel] = useState(1)
+    const [CurrentTopic,changeCurrentTopic] = useState(1)
     
     return (
         <Theme.Provider value={[Themes, changeTheme,IsLogged,changeIsLogged,CurrentLevel,changeCurrentLevel]}>
