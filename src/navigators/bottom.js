@@ -14,26 +14,13 @@ const Stack = createStackNavigator()
 const Learn_ = ({navigation}) => {
     return(
         <Stack.Navigator>
-            <Stack.Screen  name="Learn_" options={{title:"Learn",headerLeft:(props) => {
+            <Stack.Screen  name="Learn_" options={{title:"Learn Sanskrit ",headerLeft:(props) => {
                 return(
                     <TouchableOpacity onPress={() => navigation.openDrawer()}>
                         <Icon name="bars" size={25} style={{marginLeft:15}} type="AntDesign" />
                     </TouchableOpacity>
                 )
             }}} component={Learn}/>
-        </Stack.Navigator>
-    )
-}
-const Discover_ = ({navigation}) => {
-    return(
-        <Stack.Navigator>
-            <Stack.Screen  name="Discover_" options={{title:"Discover",headerLeft:(props) => {
-                return(
-                    <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                        <Icon name="bars" size={25} style={{marginLeft:15}} type="AntDesign" />
-                    </TouchableOpacity>
-                )
-            }}} component={Discover}/>
         </Stack.Navigator>
     )
 }
@@ -72,15 +59,9 @@ const Main_Bottom = (props) => {
                 return(
                     <Icon name="book-open" color={props.color}  size={props.size} type="Feather"/>
                 )
-            }
+            },
+            // title:'Learn Sanskrit'
             }} name="Learn" component={Learn_}/>
-            <Bottom.Screen options={{
-                tabBarIcon:(props) => {
-                return(
-                    <Icon name="earth" color={props.color}  size={props.size} type="Fontisto"/>
-                )
-            }
-            }} name="Discover" component={Discover_}/>
             <Bottom.Screen options={{
                 tabBarIcon:(props) => {
                 return(
@@ -92,7 +73,7 @@ const Main_Bottom = (props) => {
                 tabBarIcon:(props) => {
                 return(
                     <Icon name="user-friends" color={props.color}  size={props.size} type="FontAwesome5"/>
-              
+
               )
             }}} name="Friends" component={Friends_}/>
 

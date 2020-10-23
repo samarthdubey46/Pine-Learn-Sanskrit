@@ -28,12 +28,12 @@ const One_Level = ({ item,navigation }) => {
             </View>
             <View style={styles.onLevelView}>
                 <One_Item text={Level[1].Level} navigation={navigation} topic={Level[1].name} question={Level[1].Question} name="egg" opa={.8} color="black" type="MaterialCommunityIcons" />
-                <One_Item text={Level[2].Level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} name="egg" opa={.8} color="black" type="MaterialCommunityIcons" />
+                {/* <One_Item text={Level[2].Level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} name="egg" opa={.8} color="black" type="MaterialCommunityIcons" /> */}
             </View>
             <View style={[styles.onLevelView, { paddingBottom: 10 }]}>
-                <One_Item text={Level[3].Level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} name="egg-easter" opa={.8} color="black" type="MaterialCommunityIcons" />
-                <One_Item text={Level[4].Level} navigation={navigation} topic={Level[4].name} question={Level[4].Question} name="shield" opa={.8} color="black" type="FontAwesome" />
-                <One_Item text={Level[5].Level} navigation={navigation} topic={Level[5].name} question={Level[5].Question} name="Trophy" opa={.8} color="black" type="AntDesign" />
+                <One_Item text={Level[2].Level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} name="egg-easter" opa={.8} color="black" type="MaterialCommunityIcons" />
+                <One_Item text={Level[3].Level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} name="shield" opa={.8} color="black" type="FontAwesome" />
+                <One_Item text={Level[4].Level} navigation={navigation} topic={Level[4].name} question={Level[4].Question} name="Trophy" opa={.8} color="black" type="AntDesign" />
             </View>
         </View>
     )

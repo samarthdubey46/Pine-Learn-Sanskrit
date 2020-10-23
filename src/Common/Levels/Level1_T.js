@@ -10,6 +10,149 @@ const Phone = 'https://image.shutterstock.com/image-vector/cartoon-home-applienc
 const PC = 'https://image.shutterstock.com/image-vector/cartoon-computer-600w-636473438.jpg'
 const Drink = 'https://image.shutterstock.com/image-vector/bottle-wine-glass-hugging-each-600w-60873991.jpg'
 const Girl_Drinking_Water = 'https://image.shutterstock.com/image-vector/girl-drinking-water-vector-illustration-600w-330440330.jpg'
+const Children_Playing = 'https://image.shutterstock.com/image-vector/four-cute-kids-jumping-joy-600w-1714206253.jpg'
+const Parrot = 'https://image.shutterstock.com/image-vector/cartoon-cute-parrot-260nw-278591168.jpg'
+const Pen = 'https://image.shutterstock.com/image-vector/funny-red-pen-cartoon-writing-600w-87285619.jpg'
+const Table = 'https://image.shutterstock.com/image-vector/delicious-menu-iftar-party-on-600w-646150672.jpg'
+
+
+
+
+
+export const Topic3 = [
+    {
+        id: '1',
+        question: 'Match The Following',
+        correct: 1,
+        type: 3,
+        options1: [
+            { name: 'अहं गच्छामि', correct: 2 },
+            { name: 'जल', correct: 1 },
+            { name: 'दूरभाषणयन्त्रम्', correct: 3 },
+            { name: 'सङ्गणकः', correct: 4 },
+            { name: 'यन्त्रम्', correct: 5 },
+            { name: 'द्वारम्', correct: 0 },
+        ],
+        options2: [
+            "Door",
+            "Water",
+            "I Go",
+            "Telephone",
+            "Computer",
+            "Robot"
+        ],
+    },
+    {
+        id: '2',
+        question: 'Which Of These Mean "सङ्गणकः"',
+        type: 1,
+        correct: 1,
+        options: [
+            {
+                name: 'Door',
+                image: I_Go,
+                isCorrect: false,
+                meaning: 'I Go'
+            },
+            {
+                name: 'Computer',
+                image: PC,
+                isCorrect: true,
+                meaning: 'PC'
+            },
+            {
+                name: 'Robot',
+                image: Robot,
+                isCorrect: false,
+                meaning: 'We Go'
+            },
+            {
+                name: 'She Goes',
+                image: She_Goes,
+                isCorrect: false,
+                meaning: 'They Go'
+            },
+        ]
+    },
+    {
+        id: '3',
+        type: 2,
+        question: 'Translate "सा पिबति जलम"',
+        correct: 3,
+        image: Girl_Drinking_Water,
+        correctSeq: [0, 2, 3],
+        options: [
+            {
+                name: 'She',
+                meaning: 'I Go'
+            },
+
+            {
+                name: 'Television',
+                meaning: 'Television'
+            },
+            {
+                name: 'Drinks',
+                meaning: 'We Go'
+            },
+            {
+                name: 'Water',
+                meaning: 'Door'
+            },
+            {
+                name: 'Door',
+                meaning: 'Door'
+            },
+            {
+                name: 'Them',
+                meaning: 'Door'
+            },
+            {
+                name: 'Orange',
+                meaning: 'PC'
+            },
+        ]
+    },
+    {
+        id: '4',
+        question: 'Which Of These Mean "Childhood"',
+        type: 1,
+        correct: 3,
+        options: [
+            {
+                name: 'शुकी',
+                image: Parrot,
+                isCorrect: false,
+                meaning: 'I Go'
+            },
+
+            {
+                name: 'लेखनी',
+                image: Pen,
+                isCorrect: false,
+                meaning: 'We Go'
+            },
+            {
+                name: 'सारिणी',
+                image: Table,
+                isCorrect: false,
+                meaning: 'Door'
+            },
+            {
+                name: 'बाल्यम्',
+                image: Children_Playing,
+                isCorrect: true,
+                meaning: 'Drink'
+            },
+        ]
+    },
+
+]
+
+
+
+
+
 
 
 export const Topic2 = [
@@ -17,7 +160,7 @@ export const Topic2 = [
         id: '1',
         question: 'Which Of These Mean "Telephone"',
         correct: 1,
-        type:1,
+        type: 1,
         options: [
             {
                 name: 'अहं गच्छामि',
@@ -48,8 +191,8 @@ export const Topic2 = [
     {
         id: '2',
         question: 'Which Of These Mean "Computer"',
-        type:1,
-        correct: 1,
+        type: 1,
+        correct: 2,
         options: [
             {
                 name: 'अहं गच्छामि',
@@ -58,16 +201,16 @@ export const Topic2 = [
                 meaning: 'I Go'
             },
             {
-                name: 'सङ्गणकः',
-                image: PC,
-                isCorrect: true,
-                meaning: 'PC'
-            },
-            {
                 name: 'यन्त्रम्',
                 image: Robot,
                 isCorrect: false,
                 meaning: 'We Go'
+            },
+            {
+                name: 'सङ्गणकः',
+                image: PC,
+                isCorrect: true,
+                meaning: 'PC'
             },
             {
                 name: 'तानि गच्छन्ति',
@@ -79,8 +222,47 @@ export const Topic2 = [
     },
     {
         id: '3',
+        type: 2,
+        question: 'Translate "She Drinks water"',
+        correct: 3,
+        image: Girl_Drinking_Water,
+        correctSeq: [0, 2, 3],
+        options: [
+            {
+                name: 'सा',
+                meaning: 'I Go'
+            },
+
+            {
+                name: 'दूरदर्शनम्',
+                meaning: 'Television'
+            },
+            {
+                name: 'पिबति',
+                meaning: 'We Go'
+            },
+            {
+                name: 'जलम',
+                meaning: 'Door'
+            },
+            {
+                name: 'वयं',
+                meaning: 'Door'
+            },
+            {
+                name: 'द्वारम्',
+                meaning: 'Door'
+            },
+            {
+                name: 'सङ्गणकः',
+                meaning: 'PC'
+            },
+        ]
+    },
+    {
+        id: '4',
         question: 'Which Of These Mean "Drink"',
-        type:1,
+        type: 1,
         correct: 3,
         options: [
             {
@@ -110,39 +292,5 @@ export const Topic2 = [
             },
         ]
     },
-    {
-        id: '4',
-        type:2,
-        question: 'Translate "She Drinks water"',
-        correct: 3,
-        image:Girl_Drinking_Water,
-        correctSeq:[0,2,3] ,
-        options: [
-            {
-                name: 'सा',
-                image: She_Goes,
-                isCorrect: false,
-                meaning: 'I Go'
-            },
 
-            {
-                name: 'दूरदर्शनम्',
-                image: TV,
-                isCorrect: false,
-                meaning: 'Television'
-            },
-            {
-                name: 'पिबति',
-                image: Drink,
-                isCorrect: false,
-                meaning: 'We Go'
-            },
-            {
-                name: 'जलम',
-                image: Water,
-                isCorrect: true,
-                meaning: 'Door'
-            },
-        ]
-    },
 ]

@@ -1,4 +1,4 @@
-import { Topic2 } from "./Level1_T"
+import { Topic2, Topic3 } from "./Level1_T"
 
 const We_Go = 'https://image.shutterstock.com/image-vector/group-smiling-diverse-pupils-hugging-260nw-1779454379.jpg'
 const I_Go = 'https://cdn5.vectorstock.com/i/1000x1000/28/59/man-come-back-home-after-hard-work-day-vector-27672859.jpg'
@@ -146,32 +146,39 @@ const Level1 = [
     {
         name: 'Topic One',
         Level: 'Beginner',
-        Question: TopicOne
+        Question: TopicOne,
+        level:1
     },
     {
         name: 'Topic Two',
         Level: 'Intermidate',
-        Question: Topic2
+        Question: Topic2,
+        level:2
     },
     {
         name: 'Topic Three',
         Level: 'Beginner',
-        Question: TopicOne
+        Question: Topic3,
+        level:3
+
     },
     {
         name: 'Topic Four',
         Level: 'Advance',
-        Question: TopicOne
+        Question: TopicOne,
+        level:4
     },
     {
         name: 'Topic Six',
         Level: 'Hard',
-        Question: TopicOne
+        Question: TopicOne,
+        level:5
     },
     {
         name: 'Topic Sevene',
         Level: 'Very Hard',
-        Question: TopicOne
+        Question: TopicOne,
+        level:6
     },
 
 ]
