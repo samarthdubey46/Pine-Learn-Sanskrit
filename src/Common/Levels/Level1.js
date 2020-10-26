@@ -145,40 +145,33 @@ const TopicOne = [
 const Level1 = [
     {
         name: 'Topic One',
-        Level: 'Beginner',
+        Level: 'Level 1',
         Question: TopicOne,
         level:1
     },
     {
         name: 'Topic Two',
-        Level: 'Intermidate',
+        Level: 'Level 2',
         Question: Topic2,
         level:2
     },
     {
         name: 'Topic Three',
-        Level: 'Beginner',
+        Level: 'Level 3',
         Question: Topic3,
         level:3
-
     },
     {
         name: 'Topic Four',
-        Level: 'Advance',
+        Level: 'Level 4',
         Question: TopicOne,
         level:4
     },
     {
-        name: 'Topic Six',
-        Level: 'Hard',
+        name: 'Topic Five',
+        Level: 'Level 5',
         Question: TopicOne,
         level:5
-    },
-    {
-        name: 'Topic Sevene',
-        Level: 'Very Hard',
-        Question: TopicOne,
-        level:6
     },
 
 ]

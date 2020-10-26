@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Button, Text, Dimensions, Image, StyleSheet, Pressable, ToastAndroid, ActivityIndicator, Animated } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { ProgressBar, Colors, Headline, Surface, Title, Portal, Provider, Caption } from 'react-native-paper'
 import Icon from 'react-native-dynamic-vector-icons'
 import FlashMessage, { showMessage, hideMessage } from "react-native-flash-message";
+import { Theme } from '../../state'
+import MyComponent from '../../Components/Modals'
 
 
 const WIDTH = Dimensions.get('screen').width
@@ -179,7 +181,7 @@ class Ha extends React.Component {
                                             })
                                         }
                                     }} style={{ backgroundColor: this.state.WrongIndex[0] === index ? '#eb1010' : this.state.SelectedOption[0] === index ? '#32a852' : 'white', width: (WIDTH / 3), height: 40, marginVertical: 15, marginHorizontal: 5, borderWidth: 1, borderColor: 'rgba(0,0,0,.2)', borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Animated.Text style={{ opacity:(this.state.SelectedOption.length === 2 && this.state.CorrectIndex === item.correct) ? this.state.fadeAnim : this.state.fadeAnim2,fontSize: 18, color: this.state.WrongIndex[0] === index ? 'white' : this.state.SelectedOption[0] === index ? 'white' : 'black' }}>{item['name']}</Animated.Text>
+                                        <Animated.Text style={{ opacity: (this.state.SelectedOption.length === 2 && this.state.CorrectIndex === item.correct) ? this.state.fadeAnim : this.state.fadeAnim2, fontSize: 18, color: this.state.WrongIndex[0] === index ? 'white' : this.state.SelectedOption[0] === index ? 'white' : 'black' }}>{item['name']}</Animated.Text>
                                     </TouchableOpacity>
                                 )
                             })}
@@ -229,7 +231,7 @@ class Ha extends React.Component {
                                     }
 
                                     } style={{ backgroundColor: this.state.WrongIndex[1] === index ? '#eb1010' : this.state.SelectedOption[1] === index ? '#32a852' : 'white', width: (WIDTH / 3), height: 40, marginVertical: 15, marginHorizontal: 5, borderWidth: 1, borderColor: 'rgba(0,0,0,.2)', borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Animated.Text style={{opacity:(this.state.SelectedOption.length === 2 && this.state.CorrectIndex === index) ? this.state.fadeAnim : this.state.fadeAnim2, fontSize: 18, color: this.state.WrongIndex[1] === index ? 'white' : this.state.SelectedOption[1] === index ? 'white' : 'black' }}>{item}</Animated.Text>
+                                        <Animated.Text style={{ opacity: (this.state.SelectedOption.length === 2 && this.state.CorrectIndex === index) ? this.state.fadeAnim : this.state.fadeAnim2, fontSize: 18, color: this.state.WrongIndex[1] === index ? 'white' : this.state.SelectedOption[1] === index ? 'white' : 'black' }}>{item}</Animated.Text>
                                     </Pressable>
                                 )
                             })}
@@ -276,6 +278,7 @@ class Ha extends React.Component {
 
 
 const Q_A = ({ navigation, route }) => {
+    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge] = useContext(Theme)
     const Questions_ = route['params']['question']
     const [Questions, changeQuestion] = useState(Questions_)
     const [CurrentIndex, changeCurrentIndex] = useState(1)
@@ -284,8 +287,9 @@ const Q_A = ({ navigation, route }) => {
     const [CurrentQuestion, changeCurrentQuestion] = useState(Questions[CurrentIndex - 1])
     const [Total, changeTotal] = useState(Questions.length + 1)
     const [Intervals, changeInterval] = useState([])
-
+    const [IsOver, changeIsOver] = useState(false)
     const [SelectedChoices, changeSelectedChoices] = useState([])
+
     useEffect(() => {
         changeCurrentQuestion(Questions[CurrentIndex - 1])
     }), [CurrentIndex]
@@ -349,61 +353,179 @@ const Q_A = ({ navigation, route }) => {
             </Pressable>
         )
     }
+    // if (IsOver) {
+    //     const GameOverScreen = () => {
+    //         const GameOver = () => {
+    //             navigation.replace('hometabnavigator')
+    //             changeCurrentLevel(prev => prev + 1)
+    //         }
+    //         return (
+    //             <View style={{ backgroundColor: 'red' }}>
+
+    //             </View>
+    //         )
+    //     }
+
+    //     return (
+    //         <GameOverScreen/>
+    //     )
+    // }
     if (CurrentQuestion.type === 2) {
         return (
-            <View style={{ flex: 1, backgroundColor: 'white', position: 'relative' }}>
-                <View style={{ flex: .03, backgroundColor: 'white', position: 'relative' }}>
-                    <ProgressBar progress={((CurrentIndex)) / Total} color='#26c751' style={{ height: 6 }} />
-                </View>
-
-                <View style={{ flex: .93, alignItems: 'stretch', position: 'relative' }}>
-                    <View style={{ flex: .6, alignItems: 'center' }}>
-                        <Text style={{ fontSize: 26, opacity: 1, fontWeight: 'bold', textAlign: 'center', marginBottom: 0 }}>{CurrentQuestion.question}?</Text>
-                        <Image style={{ width: WIDTH / 2, height: undefined, aspectRatio: 1 }} source={{ uri: CurrentQuestion.image }} />
+            <>
+                <MyComponent modalVisible={IsOver} setModalVisible={changeIsOver} level={route.params.level} navigation={navigation} />
+                <View style={{ flex: 1, backgroundColor: 'white', position: 'relative', opacity: IsOver ? .5 : 1 }}>
+                    <View style={{ flex: .03, backgroundColor: 'white', position: 'relative' }}>
+                        <ProgressBar progress={((CurrentIndex)) / Total} color='#26c751' style={{ height: 6 }} />
                     </View>
-                    <View style={{ flex: .95, position: 'relative', }}>
-                        <View style={{ flex: .5, alignItems: 'stretch', justifyContent: 'space-around', marginHorizontal: 20 }}>
-                            <View style={{ borderBottomColor: 'black', flexDirection: 'row', borderBottomWidth: 1, marginBottom: 0 }}>
-                                {SelectedChoices.map((item, index) => {
-                                    if (index <= 4) {
-                                        return (<RenderOption st item={{ item: item, index: index }} />)
-                                    }
+                    <View style={{ flex: .93, alignItems: 'stretch', position: 'relative' }}>
+                        <View style={{ flex: .6, alignItems: 'center' }}>
+                            <Text style={{ fontSize: 26, opacity: 1, fontWeight: 'bold', textAlign: 'center', marginBottom: 0 }}>{CurrentQuestion.question}?</Text>
+                            <Image style={{ width: WIDTH / 2, height: undefined, aspectRatio: 1 }} source={{ uri: CurrentQuestion.image }} />
+                        </View>
+                        <View style={{ flex: .95, position: 'relative', }}>
+                            <View style={{ flex: .5, alignItems: 'stretch', justifyContent: 'space-around', marginHorizontal: 20 }}>
+                                <View style={{ borderBottomColor: 'black', flexDirection: 'row', borderBottomWidth: 1, marginBottom: 0 }}>
+                                    {SelectedChoices.map((item, index) => {
+                                        if (index <= 4) {
+                                            return (<RenderOption st item={{ item: item, index: index }} />)
+                                        }
 
-                                })}
+                                    })}
+                                </View>
+                                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, }}>
+                                    {SelectedChoices.map((item, index) => {
+                                        if (index <= 5 && index >= 3) {
+                                            return (<RenderOption st item={{ item: item, index: index }} />)
+                                        }
+
+                                    })}
+                                </View>
                             </View>
-                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, }}>
-                                {SelectedChoices.map((item, index) => {
-                                    if (index <= 5 && index >= 3) {
-                                        return (<RenderOption st item={{ item: item, index: index }} />)
-                                    }
-
-                                })}
+                            <View style={{ flexDirection: 'row', flex: .5, justifyContent: 'space-between', marginLeft: 0 }}>
+                                <FlatList
+                                    data={CurrentQuestion.options}
+                                    numColumns={3}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    renderItem={(item) => <RenderOption item={item} />}
+                                />
                             </View>
                         </View>
-                        <View style={{ flexDirection: 'row', flex: .5, justifyContent: 'space-between', marginLeft: 0 }}>
-                            <FlatList
-                                data={CurrentQuestion.options}
-                                numColumns={3}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={(item) => <RenderOption item={item} />}
-                            />
-                        </View>
                     </View>
-                </View>
-                <Pressable onPress={() => {
-                    if (SelectedChoices.length > 0) {
-                        let IsCorrect = false
-                        if (CurrentQuestion.correctSeq.length === SelectedChoices.length) {
-                            for (let i = 0; i < CurrentQuestion.correctSeq.length; i++) {
-                                if (parseInt(CurrentQuestion.correctSeq[i]) === parseInt(SelectedChoices[i].index)) {
-                                    IsCorrect = true
-                                } else {
-                                    IsCorrect = false
+                    <Pressable onPress={() => {
+                        if (SelectedChoices.length > 0) {
+                            let IsCorrect = false
+                            if (CurrentQuestion.correctSeq.length === SelectedChoices.length) {
+                                for (let i = 0; i < CurrentQuestion.correctSeq.length; i++) {
+                                    if (parseInt(CurrentQuestion.correctSeq[i]) === parseInt(SelectedChoices[i].index)) {
+                                        IsCorrect = true
+                                    } else {
+                                        IsCorrect = false
+                                    }
                                 }
                             }
+                            console.log(IsCorrect)
+                            if (!IsCorrect) {
+                                changeQuestion(prev => [...prev, {
+                                    ...CurrentQuestion,
+                                    id: String(prev.length + 1)
+                                }])
+                                ToastAndroid.showWithGravityAndOffset(
+                                    "Practice Makes A Man Perfect!",
+                                    ToastAndroid.SHORT,
+                                    ToastAndroid.BOTTOM,
+                                    25,
+                                    50
+                                );
+                            }
+                            showMessage({
+                                message: IsCorrect ? 'Amazing! You Got That Right' : 'Wrong Answer',
+                                description: 'Wait or Press This To Continue',
+                                backgroundColor: IsCorrect ? '#26c751' : '',
+                                onPress: () => {
+                                    if (CurrentIndex === Questions.length) {
+                                        if (CurrentLevel > route.params.level) {
+                                            navigation.replace('hometabnavigator')
+                                            changeIsOver(false)
+                                            return
+                                        } else {
+                                            changeIsOver(true)
+                                        }
+                                    } else {
+                                        changeSelectedOption(-1)
+                                        changeSelectedChoices([])
+                                        changeCurrentIndex(prev => prev + 1)
+                                    }
+                                },
+                                textStyle: { fontSize: 17, bottom: 10, marginTop: 1 },
+                                titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
+                                type: SelectedOption === CurrentQuestion.correct ? "success" : 'danger',
+                                animated: true,
+                                duration: 5000
+                            })
+                            if (CurrentIndex === Questions.length && false) {
+                                navigation.replace('hometabnavigator')
+                            } else {
+                                const s = setTimeout(() => {
+                                    if (CurrentIndex === Questions.length) {
+                                        if (CurrentLevel > route.params.level) {
+                                            navigation.replace('hometabnavigator')
+                                            changeIsOver(false)
+                                            return
+                                        } else {
+                                            changeIsOver(true)
+                                        }
+                                    } else {
+                                        changeSelectedOption(-1)
+                                        changeSelectedChoices([])
+                                        changeCurrentIndex(prev => prev + 1)
+                                    }
+                                }, 5000);
+                                changeInterval(prev => [...prev, s])
+                            }
                         }
-                        console.log(IsCorrect)
-                        if (!IsCorrect) {
+                    }} style={{ flex: .07, backgroundColor: SelectedChoices.length > 0 ? '#26c751' : 'rgba(156, 151, 151,1)', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                        <Title style={{ fontSize: 29, color: 'white', top: 2 }}>CHECK</Title>
+                    </Pressable>
+                    <FlashMessage position="bottom" />
+
+                </View>
+            </>
+        )
+    }
+
+    if (CurrentQuestion.type === 3) {
+        return (
+            <Ha changeInterval={changeInterval} changeIndex={changeCurrentIndex} route={route} navigation={navigation} />
+        )
+    }
+
+    return (
+        <>
+            <MyComponent modalVisible={IsOver} setModalVisible={changeIsOver} navigation={navigation} level={route.params.level} />
+            <View style={{ flex: 1, backgroundColor: 'white', position: 'relative', opacity: IsOver ? .5 : 1 }}>
+                <View style={{ flex: .1, backgroundColor: 'white', position: 'relative' }}>
+                    <ProgressBar progress={((CurrentIndex)) / Total} color='#26c751' style={{ height: 6 }} />
+
+                </View>
+                {/* <Button title="asd" onPress={() => console.log(route.params.level)} /> */}
+                <View style={{ flex: .83, alignItems: 'center', position: 'relative' }}>
+                    <View style={{ backgroundColor: 'white' }}>
+                        <Text style={{ fontSize: 26, opacity: 1, fontWeight: 'bold', textAlign: 'center' }}>{CurrentQuestion.question}?</Text>
+                    </View>
+                    <View style={{ flex: .95, position: 'relative' }}>
+                        <FlatList
+                            data={CurrentQuestion.options}
+                            keyExtractor={(item, index) => String(index)}
+                            numColumns={2}
+                            renderItem={(item) => <RenderCard changeSelectedOption={changeSelectedOption} item={item.item} ind={item.index} IsSelected={SelectedOption} />}
+                        />
+                    </View>
+                </View>
+                {/* <Button title="asd" onPress={() => console.log(Total)} /> */}
+                <Pressable onPress={() => {
+                    if (SelectedOption !== -1) {
+                        !(SelectedOption === CurrentQuestion.correct) ? (() => {
                             changeQuestion(prev => [...prev, {
                                 ...CurrentQuestion,
                                 id: String(prev.length + 1)
@@ -415,15 +537,25 @@ const Q_A = ({ navigation, route }) => {
                                 25,
                                 50
                             );
-                        }
+                        })() : ' '
                         showMessage({
-                            message: IsCorrect ? 'Amazing! You Got That Right' : 'Wrong Answer',
+                            message: SelectedOption === CurrentQuestion.correct ? 'Amazing! You Got That Right' : 'Wrong Answer',
                             description: 'Wait or Press This To Continue',
-                            backgroundColor: IsCorrect ? '#26c751' : '',
+                            backgroundColor: SelectedOption === CurrentQuestion.correct ? '#26c751' : '',
                             onPress: () => {
-                                changeSelectedOption(-1)
-                                changeSelectedChoices([])
-                                changeCurrentIndex(prev => prev + 1)
+                                if (CurrentIndex === Questions.length) {
+                                    if (CurrentLevel > route.params.level) {
+                                        navigation.replace('hometabnavigator')
+                                        changeIsOver(false)
+                                        return
+                                    } else {
+                                        changeIsOver(true)
+                                    }
+                                } else {
+                                    changeSelectedOption(-1)
+                                    changeSelectedChoices([])
+                                    changeCurrentIndex(prev => prev + 1)
+                                }
                             },
                             textStyle: { fontSize: 17, bottom: 10, marginTop: 1 },
                             titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
@@ -431,97 +563,37 @@ const Q_A = ({ navigation, route }) => {
                             animated: true,
                             duration: 5000
                         })
-                        if (CurrentIndex === Questions.length) {
-                            navigation.replace('hometabnavigator')
-                            // <MyComponent/>
+                        if (CurrentIndex === Questions.length && false) {
+                            if (CurrentLevel > props.route.level) {
+                                navigation.replace('hometabnavigator')
+                                changeIsOver(false)
+                                return
+                            }
+                            changeIsOver(true)
                         } else {
                             const s = setTimeout(() => {
-                                changeSelectedOption(-1)
-                                changeCurrentIndex(prev => prev + 1)
+                                if (CurrentIndex === Questions.length) {
+                                    if (CurrentLevel > route.params.level) {
+                                        navigation.replace('hometabnavigator')
+                                        changeIsOver(false)
+                                        return
+                                    } else {
+                                        changeIsOver(true)
+                                    }
+                                } else {
+                                    changeSelectedOption(-1)
+                                    changeSelectedChoices([])
+                                    changeCurrentIndex(prev => prev + 1)
+                                }
                             }, 5000);
                             changeInterval(prev => [...prev, s])
                         }
                     }
-                }} style={{ flex: .07, backgroundColor: SelectedChoices.length > 0 ? '#26c751' : 'rgba(156, 151, 151,1)', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                }} style={{ flex: .07, backgroundColor: SelectedOption !== -1 ? '#26c751' : 'rgba(156, 151, 151,1)', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                     <Title style={{ fontSize: 29, color: 'white', top: 2 }}>CHECK</Title>
                 </Pressable>
                 <FlashMessage position="bottom" />
-
-            </View>
-        )
-    }
-
-    if (CurrentQuestion.type === 3) {
-        return (
-            <Ha changeInterval={changeInterval} changeIndex={changeCurrentIndex} route={route} navigation={navigation} />
-        )
-    }
-
-    return (
-        <View style={{ flex: 1, backgroundColor: 'white', position: 'relative' }}>
-            <View style={{ flex: .1, backgroundColor: 'white', position: 'relative' }}>
-                <ProgressBar progress={((CurrentIndex)) / Total} color='#26c751' style={{ height: 6 }} />
-
-            </View>
-
-            <View style={{ flex: .83, alignItems: 'center', position: 'relative' }}>
-                <View style={{ backgroundColor: 'white' }}>
-                    <Text style={{ fontSize: 26, opacity: 1, fontWeight: 'bold', textAlign: 'center' }}>{CurrentQuestion.question}?</Text>
-                </View>
-                <View style={{ flex: .95, position: 'relative' }}>
-                    <FlatList
-                        data={CurrentQuestion.options}
-                        keyExtractor={(item, index) => String(index)}
-                        numColumns={2}
-                        renderItem={(item) => <RenderCard changeSelectedOption={changeSelectedOption} item={item.item} ind={item.index} IsSelected={SelectedOption} />}
-                    />
-                </View>
-            </View>
-            {/* <Button title="asd" onPress={() => console.log(Total)} /> */}
-            <Pressable onPress={() => {
-                if (SelectedOption !== -1) {
-                    !(SelectedOption === CurrentQuestion.correct) ? (() => {
-                        changeQuestion(prev => [...prev, {
-                            ...CurrentQuestion,
-                            id: String(prev.length + 1)
-                        }])
-                        ToastAndroid.showWithGravityAndOffset(
-                            "Practice Makes A Man Perfect!",
-                            ToastAndroid.SHORT,
-                            ToastAndroid.BOTTOM,
-                            25,
-                            50
-                        );
-                    })() : ' '
-                    showMessage({
-                        message: SelectedOption === CurrentQuestion.correct ? 'Amazing! You Got That Right' : 'Wrong Answer',
-                        description: 'Wait or Press This To Continue',
-                        backgroundColor: SelectedOption === CurrentQuestion.correct ? '#26c751' : '',
-                        onPress: () => {
-                            changeSelectedOption(-1)
-                            changeCurrentIndex(prev => prev + 1)
-                        },
-                        textStyle: { fontSize: 17, bottom: 10, marginTop: 1 },
-                        titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
-                        type: SelectedOption === CurrentQuestion.correct ? "success" : 'danger',
-                        animated: true,
-                        duration: 5000
-                    })
-                    if (CurrentIndex === Questions.length) {
-                        navigation.replace('hometabnavigator')
-                    } else {
-                        const s = setTimeout(() => {
-                            changeSelectedOption(-1)
-                            changeCurrentIndex(prev => prev + 1)
-                        }, 5000);
-                        changeInterval(prev => [...prev, s])
-                    }
-                }
-            }} style={{ flex: .07, backgroundColor: SelectedOption !== -1 ? '#26c751' : 'rgba(156, 151, 151,1)', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                <Title style={{ fontSize: 29, color: 'white', top: 2 }}>CHECK</Title>
-            </Pressable>
-            <FlashMessage position="bottom" />
-            {/* <View style={{ position: 'absolute', width: WIDTH, height: HEIGHT - 95, alignItems: 'stretch', justifyContent: 'flex-end' }}>
+                {/* <View style={{ position: 'absolute', width: WIDTH, height: HEIGHT - 95, alignItems: 'stretch', justifyContent: 'flex-end' }}>
                 <View style={{ backgroundColor: 'rgba(65, 191, 99,1)', width: WIDTH, height: 150, }}>
                     <Title style={{ color: 'white', fontSize: 25, marginTop: 10,marginHorizontal:20 }}>Amazing</Title>
                     <Pressable style={styles.buttonS}>
@@ -529,8 +601,8 @@ const Q_A = ({ navigation, route }) => {
                     </Pressable>
                 </View>
             </View> */}
-
-        </View>
+            </View>
+        </>
     )
 }
 const styles = StyleSheet.create({
