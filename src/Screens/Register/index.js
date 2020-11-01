@@ -35,7 +35,7 @@ const App = ({ navigation }) => {
             changeLoading(false)
             return
         }
-        if(UserName.length <= 12){
+        if(UserName.length >= 12){
             changemessage("Please Use A Smaller Username")
             changeLoading(false)
             return

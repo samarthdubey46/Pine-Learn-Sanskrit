@@ -14,9 +14,11 @@ import Icon from 'react-native-dynamic-vector-icons'
 
 const HEIGHT = Dimensions.get('screen').height
 const WIDTH = Dimensions.get('screen').width
+const Happy = 'https://i.ibb.co/Cv6jqd4/Happy.jpg'
+const Sad = 'https://i.ibb.co/KsW4gKd/Sad.jpg'
 
 const App = ({ modalVisible, setModalVisible, navigation, level }) => {
-    const [image, changeImage] = useState('https://image.shutterstock.com/image-illustration/five-star-rating-shiny-golden-600w-330883226.jpg')
+    const [image, changeImage] = useState(Happy)
     const [IsBadgeUnlocked, changeIsBadgeUnloocked] = useState(false)
     const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge] = useContext(Theme)
     useEffect(() => {
@@ -48,9 +50,9 @@ const App = ({ modalVisible, setModalVisible, navigation, level }) => {
                             setModalVisible(false)
                         }} type="MaterialIcons" size={24} name="cancel" color="black" />
                     </View>
-                    <View style={{ flex: .9, justifyContent: 'center', alignItems: 'center', marginHorizontal: 15 }}>
-                        <Image resizeMode="contain" style={{ height: (HEIGHT / 4.6) - 30, width: WIDTH / 1.3, marginBottom: 30 }} source={{ uri: image }} />
-                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{IsBadgeUnlocked ? 'Congratulations You Unlocked A New Badge' : `You Have Completed Level ${CurrentLevel}`}</Text>
+                    <View style={{ flex: .9, alignItems: 'center', marginHorizontal: 15 }}>
+                        <Image resizeMode="contain" style={{ height: (HEIGHT / 4.2) - 30, width: WIDTH / 1.2, marginBottom: 30 }} source={{ uri: image }} />
+                        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{IsBadgeUnlocked ? 'Congratulations You Unlocked A New Avatar' : `You Have Completed Level ${CurrentLevel}`}</Text>
                     </View>
                 </View>
             </View>

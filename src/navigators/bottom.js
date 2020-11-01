@@ -30,7 +30,7 @@ const Badges_ = ({ navigation }) => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Badges_" options={{
-                title: "Badges", headerLeft: (props) => {
+                title: "Avatars", headerLeft: (props) => {
                     return (
                         <TouchableOpacity onPress={() => navigation.openDrawer()}>
                             <Icon name="bars" size={25} style={{ marginLeft: 15 }} type="AntDesign" />
@@ -78,7 +78,8 @@ const Main_Bottom = (props) => {
                     return (
                         <Icon name="badge" color={props.color} size={props.size} type="SimpleLineIcons" />
                     )
-                }
+                },
+                title:"Avatars"
             }} name="Badges" component={Badges_} />
             <Bottom.Screen options={{
                 tabBarIcon: (props) => {

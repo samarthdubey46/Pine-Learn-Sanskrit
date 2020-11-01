@@ -29,7 +29,7 @@ const RemoveData = async (key) => {
 const App = ({ navigation }) => {
     // noufal369@live.com
     // 123456
-    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main,Streak,changeStreak] = useContext(Theme)
+    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading_tr, Profile_Pic, changeProfile_Pic] = useContext(Theme)
     const [email, changeEmail] = useState('samarthdubey46@gmail.com')
     const [password, changePassword] = useState('password')
     const [message, changemessage] = useState('')
@@ -42,18 +42,22 @@ const App = ({ navigation }) => {
     const Login_User = async () => {
         changeLoading(true)
         const res = await Login(email, password)
-        if (!res.status)
+        console.log(res)
+        if (!res.status) {
+            changeLoading(true)
             return
+        }
         const obj = {
             email: res.email,
             password: res.password,
             pk: res.pk,
             token: res.token,
             username: res.username,
-            streak:res.streak
+            streak: res.streak
         }
         changeUsername(obj.username)
         changeEmail_Main(obj.email)
+        changeProfile_Pic(res.Profile_Pic)
         Object.keys(obj).forEach(item => {
             (async () => {
                 await RemoveData(String(item))
@@ -64,12 +68,12 @@ const App = ({ navigation }) => {
         let d = Date.now()
         // console.log()
         // changeStreak(parseInt(res.streak))
-        await storeData('log','yes')
+        await storeData('log', 'yes')
         // await storeData('last_update',String(d))
 
         changeIsLogged(true)
         changeCurrentLevel(parseInt(res['CurrentLevel']) !== undefined && parseInt(res['CurrentLevel']) !== null ? parseInt(res['CurrentLevel']) : 1)
-        changeLoading(false) 
+        changeLoading(false)
     }
 
     return (
@@ -83,10 +87,11 @@ const App = ({ navigation }) => {
                     <View style={{ marginHorizontal: 15, flexDirection: 'row', marginBottom: 0, borderRadius: 5, borderWidth: 1, alignItems: 'center', height: 60, borderColor: 'rgba(0,0,0,.2)' }}>
                         <MaterialIcons name="email" style={{ marginHorizontal: 12, marginRight: 20, opacity: .8 }} size={26} color={text_color} />
                         <TextInput
+                            autoCapitalize={false}
                             value={email}
                             onChangeText={text => changeEmail(text)}
                             mode="outlined"
-                            style={{ fontFamily: fontFamily, padding: 0, backgroundColor: 'rgba(0,0,0,0)', color: text_color, fontSize: 16,width: Dimensions.get('screen').width }}
+                            style={{ fontFamily: fontFamily, padding: 0, backgroundColor: 'rgba(0,0,0,0)', color: text_color, fontSize: 16, width: Dimensions.get('screen').width }}
                             placeholder="Email"
                             placeholderTextColor={text_color}
                         />
@@ -101,7 +106,7 @@ const App = ({ navigation }) => {
                             value={password}
                             onChangeText={text => changePassword(text)}
                             mode="outlined"
-                            style={{ padding: 0, backgroundColor: 'rgba(0,0,0,0)', fontSize: 16,width: Dimensions.get('screen').width }}
+                            style={{ padding: 0, backgroundColor: 'rgba(0,0,0,0)', fontSize: 16, width: Dimensions.get('screen').width }}
                             placeholder="Password"
                             placeholderTextColor={text_color}
                         />

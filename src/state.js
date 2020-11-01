@@ -2,6 +2,8 @@
 import React, { useState, createContext, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Update } from './ApiCalls/More';
+import { Login } from './ApiCalls/Auth';
+import { Last } from './Screens/Badges/images';
 
 export const dark_style = {
     text_color: 'white',
@@ -44,21 +46,25 @@ const ThemeProvider = (props) => {
     const [Username, changeUsername] = useState('')
     const [Email, changeEmail_Main] = useState('')
     const [Streak, changeStreak] = useState(0)
-    const [LatestBadge, changeLatestBadge] = useState({})
+    const [LatestBadge, changeLatestBadge] = useState({ data: { image: ' ' } })
+    const [Loading, changeLoading] = useState(false)
+    const [Profile_Pic, changeProfile_Pic] = useState(' ')
+
 
     const Triggers_Of_Badge = [
-        { level: 2, badge: 'https://i.ibb.co/1JCLWpb/First-Medal-removebg-preview.png' },
-        { level: 3, badge: 'https://i.ibb.co/v11hPgf/sdasdasd.png' },
-        { level: 5, badge: 'https://i.ibb.co/h7pzjCY/Third-Medal-removebg-preview.png' },
-        { level: 7, badge: 'https://i.ibb.co/YTBS1nZ/Fourth-Medal-removebg-preview.png' },
-        { level: 9, badge: 'https://i.ibb.co/PDh4wKc/Fifth-Medal-removebg-preview.png' },
-        { level: 10, badge: 'https://i.ibb.co/mcN4M1J/Seventh-Medal-removebg-preview.png' },
-        { level: 12, badge: 'https://i.ibb.co/mcN4M1J/Seventh-Medal-removebg-preview.png' },
-        { level: 15, badge: 'https://i.ibb.co/pL4jV2X/Eight-Medal-removebg-preview.png' },
-        { level: 17, badge: 'https://i.ibb.co/pL4jV2X/Eight-Medal-removebg-preview.png' },
-        { level: 19, badge: 'https://i.ibb.co/pL4jV2X/Eight-Medal-removebg-preview.png' },
-        { level: 20, badge: 'https://i.ibb.co/pL4jV2X/Eight-Medal-removebg-preview.png' },
-        { level: 22, badge: 'https://i.ibb.co/pL4jV2X/Eight-Medal-removebg-preview.png' },
+        { level: 0, badge: 'https://static.vecteezy.com/system/resources/previews/000/269/049/non_2x/funny-cartoon-tree-character-vector.jpg' },
+        { level: 2, badge: 'https://i.ibb.co/zFyrXxB/First-Avatar.jpg' },
+        { level: 3, badge: 'https://i.ibb.co/ZT0PTz8/Second-Ava.jpg' },
+        { level: 5, badge: 'https://i.ibb.co/vYmbjV2/Third.jpg' },
+        { level: 7, badge: 'https://i.ibb.co/2ZYjy90/Fourth.jpg' },
+        { level: 9, badge: 'https://i.ibb.co/tMQq26s/Fifth.jpg' },
+        { level: 11, badge: 'https://i.ibb.co/0ms7FHZ/Six.jpg' },
+        { level: 13, badge: 'https://i.ibb.co/F49dPfh/Seven.jpg' },
+        { level: 14, badge: 'https://image.shutterstock.com/image-vector/coconut-tree-cartoon-style-vector-600w-482832163.jpg' },
+        // { level: 17, badge: 'https://i.ibb.co/3fXTbyw/Nine.jpg' },
+        // { level: 19, badge: 'https://i.ibb.co/r61JYNb/Tenth.jpg' },
+        // { level: 21, badge: 'https://i.ibb.co/pL4jV2X/Eight-Medal-removebg-preview.png' },
+        // { level: 22, badge: 'https://image.shutterstock.com/image-vector/coconut-tree-cartoon-style-vector-600w-482832163.jpg' },
 
     ]
     const GetLatestBadge_With_Other = (level, index) => {
@@ -105,19 +111,22 @@ const ThemeProvider = (props) => {
     }
     useEffect(() => {
         (async () => {
-            await getData()
+            changeLoading(true)
+            // await getData()
             await getData_Login()
+            //                                                                                                                                                                  Profile_Pic
             const Email = await getData_For_Each('email')
             const Username = await getData_For_Each('username')
             const password = await getData_For_Each('password')
             const pk = await getData_For_Each('pk')
             const Token = await getData_For_Each('token')
             // const streak = await getData_For_Each('streak')
-            if (parseInt(CurrentLevel) > 1) {
-                const res = await Update(Email, Username, password, CurrentLevel, Token, pk, 0)
-                console.log(res)
-            }
+            const res = await Login(Email, password,)
+            console.log(res)
+            changeCurrentLevel(parseInt(res.CurrentLevel))
+            changeProfile_Pic(String(res.Profile_Pic))
             changeLatestBadge(GetLatestBadge_With_Other(CurrentLevel))
+            changeLoading(false)
         })()
     }, [])
     useEffect(() => {
@@ -131,19 +140,44 @@ const ThemeProvider = (props) => {
             const pk = await getData_For_Each('pk')
             const Token = await getData_For_Each('token')
             // const streak = await getData_For_Each('streak')
-            if (parseInt(CurrentLevel) > 1) {
-                const res = await Update(Email, Username, password, CurrentLevel, Token, pk, 0)
+            if (parseInt(CurrentLevel) > 1 && String(Profile_Pic).length > 0) {
+                const res = await Update(Email, Username, password, CurrentLevel, Token, pk, 0, Profile_Pic)
                 console.log(res)
             }
             changeLatestBadge(GetLatestBadge_With_Other(CurrentLevel))
         })()
     }, [CurrentLevel])
 
+    useEffect(() => {
+        (async () => {
+            console.log("Level Updated")
+            console.log(JSON.stringify(CurrentLevel))
+            await storeData(JSON.stringify(CurrentLevel))
+            const Email = await getData_For_Each('email')
+            const Username = await getData_For_Each('username')
+            const password = await getData_For_Each('password')
+            const pk = await getData_For_Each('pk')
+            const Token = await getData_For_Each('token')
+            // const streak = await getData_For_Each('streak')
+            if (parseInt(CurrentLevel) > 1 && String(Profile_Pic).length > 0) {
+                const res = await Update(Email, Username, password, CurrentLevel, Token, pk, 0, Profile_Pic)
+                console.log(res)
+            }
+            changeLatestBadge(GetLatestBadge_With_Other(CurrentLevel))
+        })()
+    }, [Profile_Pic])
+
 
     return (
-        <Theme.Provider value={[Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak,LatestBadge, changeLatestBadge]}>
+        <Theme.Provider value={[Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading, Profile_Pic, changeProfile_Pic]}>
             {props.children}
         </Theme.Provider>
     )
 }
 export default ThemeProvider
+
+const Avatar = 'https://image.shutterstock.com/image-vector/flat-icon-tree-collection-isolated-600w-1673776393.jpg'
+const Right_Wrong = 'https://static.vecteezy.com/system/resources/previews/001/233/768/non_2x/two-happy-and-sad-cartoon-tree-characters-vector.jpg'
+const Main_Tree = 'https://static.vecteezy.com/system/resources/previews/000/269/049/non_2x/funny-cartoon-tree-character-vector.jpg'
+const Happy = 'https://i.ibb.co/Cv6jqd4/Happy.jpg'
+const Sad = 'https://i.ibb.co/KsW4gKd/Sad.jpg'

@@ -3,7 +3,7 @@ import { View, Button, Text, Dimensions, Image, Animated } from 'react-native'
 import { Theme } from '../../state'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { GetLeaderBoard, Search } from '../../ApiCalls/More'
-import { ActivityIndicator, Caption, Title, Surface, Card, Searchbar, IconButton,Divider } from 'react-native-paper'
+import { ActivityIndicator, Caption, Title, Surface, Card, Searchbar, IconButton, Divider } from 'react-native-paper'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-dynamic-vector-icons'
 
@@ -125,23 +125,23 @@ const Friends = (props) => {
         })
         return lat
     }
-    const GetLatestBadge_With_Other = (level,index) => {
-        let lat = { level: 2, badge: 'https://i.ibb.co/FBdh2BN/locker-icon-vector-padlock-symbol-600w-1086098825.jpg' };
+    const GetLatestBadge_With_Other = (level, index) => {
+        let lat = { level: 2, badge: 'https://i.ibb.co/KsW4gKd/Sad.jpg' };
         // Triggers_Of_Badge.forEach(item => {
         //     if (parseInt(level) > item.level) {
         //         lat = item
         //     }
         //     // lat.push(item)
         // })
-        if(index === 0){
+        if (index === 0) {
             lat = { level: 1, badge: 'https://image.shutterstock.com/image-vector/gold-medal-vector-golden-1st-260nw-694145683.jpg' }
         }
-        if(index === 1){
+        if (index === 1) {
             lat = { level: 1, badge: 'https://image.shutterstock.com/image-vector/silver-medal-vector-2nd-place-600w-695553751.jpg' }
         }
-        if (index === 2){
+        if (index === 2) {
             lat = { level: 1, badge: 'https://image.shutterstock.com/image-vector/bronze-medal-vector-copper-3rd-260nw-695794561.jpg' }
-            
+
         }
 
         return lat
@@ -171,7 +171,7 @@ const Friends = (props) => {
         return (
             <View style={{ height: 90, marginHorizontal: 10, borderBottomColor: 'rgba(0,0,0,.1)', borderBottomWidth: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                    <Image resizeMode="contain" style={{ width: 60, height: 80, marginRight: 15 }} source={{ uri: GetLatestBadge_With_Other(CurrentLevel_Other,index).badge }} />
+                    <Image resizeMode="contain" style={{ width: 60, height: 80, marginRight: 15 }} source={{ uri: GetLatestBadge_With_Other(CurrentLevel_Other, index).badge }} />
                     <View style={{ marginTop: 8 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{ fontSize: 16, marginRight: 15 }}>{username}</Text>
@@ -185,80 +185,86 @@ const Friends = (props) => {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-            {TopOpen && (<View style={{ flex: GetLatestBadge().length <= 0 ? .25 : .36, borderBottomWidth: 1, borderBottomColor: 'rgba(0,0,0,.1)', justifyContent: 'center', }}>
-                <View style={{ flex: GetLatestBadge().length <= 0 ? 1 : .6, paddingHorizontal: 20, paddingTop: 10, borderBottomWidth: GetLatestBadge().length <= 0 ? 0 : 1, borderBottomColor: 'rgba(0,0,0,.1)', }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Title style={{ fontSize: 25 }}>{Username_Nested}</Title>
-                        <TouchableOpacity>
-                            <Text style={{ fontSize: 16, color: '#e50071', fontWeight: 'bold', }}>EDIT</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Caption style={{ marginLeft: 2, marginTop: 5, fontSize: 15 }}>My-Standing : {MyStanding}</Caption>
-                    <Caption style={{ marginLeft: 2, marginTop: -0, fontSize: 15 }}>{name_level}</Caption>
-                    <Caption style={{ marginLeft: 2, marginTop: -2, fontSize: 15 }}>{Email_Nested}</Caption>
-                </View>
-                {GetLatestBadge().length <= 0 && <Text style={{ alignSelf: 'center', marginBottom: 6 }}>You Dont Have Any Badges</Text>}
-                {/* <Button title="asd" onPress={() => console.log(Data)}/> */}
-                {GetLatestBadge().length > 0 && (<View style={{ flex: .4, marginTop: 5 }}>
-                    {/* <Caption style={{ marginLeft: 2, top: -2, fontSize: 15, paddingHorizontal: 20 }}>Badges</Caption> */}
-                    <FlatList
-                        horizontal
-                        data={GetLatestBadge()}
-                        keyExtractor={(item, i) => i.toString()}
-                        renderItem={(item) => <RenderImage CurrentLevel={CurrentLevel} item={item.item} />}
-                    />
-                </View>)}
-            </View>)}
-            {!ClosedProgramitically && (<IconButton onPress={() => ClosedProgramitically ? 's' : changeTopOpen(prev => !prev)} style={{ alignSelf: 'center', top: -10, bottom: -20, }} icon={TopOpen ? 'arrow-up' : 'arrow-down'} />)}
-            <View style={{ flex: TopOpen ? .7 : 1, }}>
-                <Card style={{ flex: 1, marginTop: ClosedProgramitically ? 0  : -20, marginBottom: 0, }}>
-                    <View style={{ height: 40, justifyContent: 'center' }}>
-                        <Text style={{ fontWeight: 'bold', marginHorizontal: 15, fontSize: 16 }}>LeaderBoard</Text>
-                    </View>
-                    <Card.Content style={{ flex: 1, margin: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, }}>
-                        <Searchbar
-                            onFocus={() => {
-                                changeClosedProgramitically(true)
-                                changeForceFullyClosed(false)
-                                changeTopOpen(false)
-                            }}
-                            onBlur={() => {
-                                changeClosedProgramitically(false)
-                                changeForceFullyClosed(true)
-                            }}
-                            value={Search_Str}
-                            inputStyle={{ fontSize: 16 }}
-                            style={{ borderRadius: 15, marginBottom: 15, marginHorizontal: 10 }}
-                            onChangeText={(t) => ChangeText(t)}
-                        />
-
-                        {Search_Loading ? (
-                            <ActivityIndicator
-                                size="large"
-                            />
-                        ) : Search_Str.length > 0 ? (
+        <FlatList
+            data={['s']}
+            nestedScrollEnabled
+            renderItem={(item) => (
+                <View style={{ flex: 1, backgroundColor: 'white' }}>
+                    {TopOpen && (<View style={{ flex: GetLatestBadge().length <= 0 ? .25 : .4, borderBottomWidth: 1, borderBottomColor: 'rgba(0,0,0,.1)', justifyContent: 'center', }}>
+                        <View style={{ flex: GetLatestBadge().length <= 0 ? 1 : .55, paddingHorizontal: 20, paddingTop: 10, borderBottomWidth: GetLatestBadge().length <= 0 ? 0 : 1, borderBottomColor: 'rgba(0,0,0,.1)', }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Title style={{ fontSize: 25 }}>{Username_Nested}</Title>
+                                <TouchableOpacity>
+                                    <Text style={{ fontSize: 16, color: '#e50071', fontWeight: 'bold', }}>EDIT</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <Caption style={{ marginLeft: 2, marginTop: 5, fontSize: 15 }}>My-Standing : {MyStanding}</Caption>
+                            <Caption style={{ marginLeft: 2, marginTop: -0, fontSize: 15 }}>{name_level}</Caption>
+                            <Caption style={{ marginLeft: 2, marginTop: -2, fontSize: 15 }}>{Email_Nested}</Caption>
+                        </View>
+                        {GetLatestBadge().length <= 0 && <Text style={{ alignSelf: 'center', marginBottom: 6 }}>You Dont Have Any Badges</Text>}
+                        {/* <Button title="asd" onPress={() => console.log(Data)}/> */}
+                        {GetLatestBadge().length > 0 && (<View style={{ flex: .45, marginTop: 5 }}>
+                            {/* <Caption style={{ marginLeft: 2, top: -2, fontSize: 15, paddingHorizontal: 20 }}>Badges</Caption> */}
                             <FlatList
-                                nestedScrollEnabled
-                                data={SearchData}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={(item) => {
-                                    return <RenderOne pk={pk} item={item.item} index={item.index} />
-                                }}
+                                horizontal
+                                data={GetLatestBadge()}
+                                keyExtractor={(item, i) => i.toString()}
+                                renderItem={(item) => <RenderImage CurrentLevel={CurrentLevel} item={item.item} />}
                             />
-                        ) : (
-                                <FlatList
-                                    nestedScrollEnabled
-                                    data={Data}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    renderItem={(item) => <RenderOne pk={pk} item={item.item} index={item.index} />}
+                        </View>)}
+                    </View>)}
+                    {!ClosedProgramitically && (<IconButton onPress={() => ClosedProgramitically ? 's' : changeTopOpen(prev => !prev)} style={{ alignSelf: 'center', top: -10, bottom: -20, }} icon={TopOpen ? 'arrow-up' : 'arrow-down'} />)}
+                    <View style={{ flex: TopOpen ? .7 : 1, }}>
+                        <Card style={{ flex: 1, marginTop: ClosedProgramitically ? 0 : -20, marginBottom: 0, }}>
+                            <View style={{ height: 40, justifyContent: 'center' }}>
+                                <Text style={{ fontWeight: 'bold', marginHorizontal: 15, fontSize: 16 }}>LeaderBoard</Text>
+                            </View>
+                            <Card.Content style={{ flex: 1, margin: 0, marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, }}>
+                                <Searchbar
+                                    onFocus={() => {
+                                        changeClosedProgramitically(true)
+                                        changeForceFullyClosed(false)
+                                        changeTopOpen(false)
+                                    }}
+                                    onBlur={() => {
+                                        changeClosedProgramitically(false)
+                                        changeForceFullyClosed(true)
+                                    }}
+                                    value={Search_Str}
+                                    inputStyle={{ fontSize: 16 }}
+                                    style={{ borderRadius: 15, marginBottom: 15, marginHorizontal: 10 }}
+                                    onChangeText={(t) => ChangeText(t)}
                                 />
-                            )}
-                    </Card.Content>
-                </Card>
 
-            </View>
-        </View>
+                                {Search_Loading ? (
+                                    <ActivityIndicator
+                                        size="large"
+                                    />
+                                ) : Search_Str.length > 0 ? (
+                                    <FlatList
+                                        nestedScrollEnabled
+                                        data={SearchData}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        renderItem={(item) => {
+                                            return <RenderOne pk={pk} item={item.item} index={item.index} />
+                                        }}
+                                    />
+                                ) : (
+                                            <FlatList
+                                                nestedScrollEnabled
+                                                data={Data}
+                                                keyExtractor={(item, index) => index.toString()}
+                                                renderItem={(item) => <RenderOne pk={pk} item={item.item} index={item.index} />}
+                                            />
+                                        )}
+                            </Card.Content>
+                        </Card>
+
+                    </View>
+                </View>
+            )}
+        />
     )
 }
 export default Friends

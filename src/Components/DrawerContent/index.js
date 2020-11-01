@@ -38,7 +38,7 @@ const getData_For_Each = async (key) => {
 
 
 const App = (props) => {
-    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak,LastestBadge, changeLatestBadge] = useContext(Theme)
+    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak,LatestBadge, changeLatestBadge,Loading,Profile_Pic,changeProfile_Pic] = useContext(Theme)
     const AsyncKeys = [
         "email",
         "password",
@@ -50,10 +50,11 @@ const App = (props) => {
     ]
     const [Username_Nested, changeUsername_Nested] = useState('')
     const [levelName, changelevelname] = useState()
-    // const [Loading,changeLoading] = useState(false)
+    const [Loading__Main,changeLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
+            changeLoading()
             let name;
             if (CurrentLevel <= 4) {
                 name = 'Beginner'
@@ -99,7 +100,7 @@ const App = (props) => {
                             <Image
                                 resizeMode="contain"
                                 source={{
-                                    uri: LastestBadge.data.badge,
+                                    uri: Profile_Pic,
                                 }}
                                 style={{ height: 90, width: 100 }}
                             />
@@ -112,7 +113,7 @@ const App = (props) => {
                     <View style={styles.middleSection}>
                         {middleSectionContents(String(CurrentLevel), 'Level')}
                         <Divider style={{ width: 1, height: 50 }} />
-                        {middleSectionContents(String(LastestBadge.total), 'Badges')}
+                        {middleSectionContents(String(LatestBadge.total), 'Avatars')}
                     </View>
                     <View style={styles.BottomContainer}>
                         <DrawerItem
@@ -144,7 +145,7 @@ const App = (props) => {
                                     style={{ opacity: .7 }}
                                 />
                             )}
-                            label="Badges"
+                            label="Avatars"
                             onPress={() => {
                                 navigation.closeDrawer()
                                 navigation.jumpTo('Badges')

@@ -1,16 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, Button, Text, Dimensions, Image, StyleSheet, Pressable, ToastAndroid, ActivityIndicator, Animated } from 'react-native'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { View, Button, Text, Dimensions, Image, StyleSheet, Pressable, ToastAndroid, ActivityIndicator, Animated, Alert } from 'react-native'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { ProgressBar, Colors, Headline, Surface, Title, Portal, Provider, Caption } from 'react-native-paper'
 import Icon from 'react-native-dynamic-vector-icons'
 import FlashMessage, { showMessage, hideMessage } from "react-native-flash-message";
 import { Theme } from '../../state'
 import MyComponent from '../../Components/Modals'
+// import { Tooltip } from 'react-native-elements'
+import {Tooltip} from '../../Components/tooltip/Tooltip'
+console.disableYellowBox = true
+
 
 
 const WIDTH = Dimensions.get('screen').width
 const HEIGHT = Dimensions.get('screen').height
-
+const Happy = 'https://i.ibb.co/Cv6jqd4/Happy.jpg'
+const Sad = 'https://i.ibb.co/KsW4gKd/Sad.jpg'
 
 const RenderCard = ({ item, IsSelected, ind, changeSelectedOption }) => {
     if (parseInt(IsSelected) === parseInt(ind)) {
@@ -254,17 +259,8 @@ class Ha extends React.Component {
                             titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
                             type: true ? "success" : 'danger',
                             animated: true,
-                            duration: 5000
+                            duration: 9999999999999999999999999
                         })
-                        if (false) {
-                            navigation.replace('hometabnavigator')
-                        } else {
-                            const s = setTimeout(() => {
-                                // changeSelectedOption(-1)
-                                this.props.changeIndex(prev => prev + 1)
-                            }, 5000);
-                            this.props.changeInterval(prev => [...prev, s])
-                        }
                     }
                 }} style={{ flex: .07, backgroundColor: this.state.Ignore1.length === this.state.Options1.length ? '#26c751' : 'rgba(156, 151, 151,1)', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                     <Title style={{ fontSize: 29, color: 'white', top: 2 }}>CHECK</Title>
@@ -274,7 +270,6 @@ class Ha extends React.Component {
         )
     }
 }
-
 
 
 const Q_A = ({ navigation, route }) => {
@@ -289,9 +284,13 @@ const Q_A = ({ navigation, route }) => {
     const [Intervals, changeInterval] = useState([])
     const [IsOver, changeIsOver] = useState(false)
     const [SelectedChoices, changeSelectedChoices] = useState([])
-
+    const [Shown, changeShown] = useState(false)
     useEffect(() => {
         changeCurrentQuestion(Questions[CurrentIndex - 1])
+        if (Questions[CurrentIndex - 1].shouldAlert && !Shown && parseInt(CurrentLevel) === 4) {
+            Alert.alert("New Word", "Click The Yellow Word To See Its Meaning")
+            changeShown(true)
+        }
     }), [CurrentIndex]
     useEffect(() => {
         let temp = []
@@ -370,6 +369,26 @@ const Q_A = ({ navigation, route }) => {
     //         <GameOverScreen/>
     //     )
     // }
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const fadeIn = () => {
+        // Will change fadeAnim value to 1 in 5 seconds
+        Animated.timing(fadeAnim, {
+            toValue: -24,
+            duration: 400,
+            //   useNativeDriver:true
+        }).start();
+    };
+
+    const fadeOut = () => {
+        // Will change fadeAnim value to 0 in 5 seconds
+        Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 400,
+            //   useNativeDriver:true
+        }).start();
+    };
+
+    const [color, changeCOlor] = useState('#fcba03')
     if (CurrentQuestion.type === 2) {
         return (
             <>
@@ -379,9 +398,26 @@ const Q_A = ({ navigation, route }) => {
                         <ProgressBar progress={((CurrentIndex)) / Total} color='#26c751' style={{ height: 6 }} />
                     </View>
                     <View style={{ flex: .93, alignItems: 'stretch', position: 'relative' }}>
-                        <View style={{ flex: .6, alignItems: 'center' }}>
-                            <Text style={{ fontSize: 26, opacity: 1, fontWeight: 'bold', textAlign: 'center', marginBottom: 0 }}>{CurrentQuestion.question}?</Text>
-                            <Image style={{ width: WIDTH / 2, height: undefined, aspectRatio: 1 }} source={{ uri: CurrentQuestion.image }} />
+                        <View style={{ flex: .6, alignItems: 'center', justifyContent: 'space-around', top: 10 }}>
+                            <Animated.Image style={{ width: WIDTH / 2, height: 190, top: fadeAnim }} source={{ uri: CurrentQuestion.image }} />
+                            {CurrentQuestion.NewWord ? (
+                                <View style={{ flexDirection: 'row' }}>
+                                    {CurrentQuestion.question.map(item => {
+                                        if (!item.new) {
+                                            return (
+                                                <Text style={{ fontSize: 20, opacity: 1, fontWeight: 'bold', textAlign: 'center', marginBottom: 0, marginRight: 5 }}>{item.name}</Text>
+                                            )
+                                        }
+                                        return (
+                                            <Tooltip onOpen={() => fadeIn()} onClose={() => fadeOut()} backgroundColor='white' containerStyle={{ elevation: 5, marginLeft: 10 }} overlayColor='white' withOverlay={false} popover={<Text>{item.meaning}</Text>}>
+                                                <Text style={{ fontSize: 20, opacity: 1, fontWeight: 'bold', color: color, textAlign: 'center', marginBottom: 0, marginRight: 5 }}>{item.name}</Text>
+                                            </Tooltip>
+                                        )
+                                    })}
+                                </View>
+                            ) : (
+                                    <Text style={{ fontSize: 20, opacity: 1, fontWeight: 'bold', textAlign: 'center', marginBottom: 0 }}>{CurrentQuestion.question}</Text>
+                                )}
                         </View>
                         <View style={{ flex: .95, position: 'relative', }}>
                             <View style={{ flex: .5, alignItems: 'stretch', justifyContent: 'space-around', marginHorizontal: 20 }}>
@@ -393,13 +429,15 @@ const Q_A = ({ navigation, route }) => {
 
                                     })}
                                 </View>
-                                <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, }}>
+                                <View style={{ flex: .5, alignItems: 'stretch', justifyContent: 'space-around', }}>
+                                <View style={{ borderBottomColor: 'black', flexDirection: 'row', borderBottomWidth: 1, marginBottom: 0 }}>
                                     {SelectedChoices.map((item, index) => {
-                                        if (index <= 5 && index >= 3) {
+                                        if (index <= 5 && index >= 4) {
                                             return (<RenderOption st item={{ item: item, index: index }} />)
                                         }
 
                                     })}
+                                    </View>
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', flex: .5, justifyContent: 'space-between', marginLeft: 0 }}>
@@ -414,6 +452,11 @@ const Q_A = ({ navigation, route }) => {
                     </View>
                     <Pressable onPress={() => {
                         if (SelectedChoices.length > 0) {
+                            let correct_ans = ''
+                            CurrentQuestion.correctSeq.forEach(item => {
+                                let temp = CurrentQuestion.options[item]
+                                correct_ans += temp.name + ' '
+                            })
                             let IsCorrect = false
                             if (CurrentQuestion.correctSeq.length === SelectedChoices.length) {
                                 for (let i = 0; i < CurrentQuestion.correctSeq.length; i++) {
@@ -425,6 +468,20 @@ const Q_A = ({ navigation, route }) => {
                                 }
                             }
                             console.log(IsCorrect)
+                            if (!IsCorrect && CurrentIndex === Total - 1) {
+                                // changeSelectedChoices([])
+                                showMessage({
+                                    message: `Wrong Ans`,
+                                    description:`${correct_ans} Is The Correct Ans`,
+                                    hideOnPress: true,
+                                    animated: true,
+                                    textStyle: { fontSize: 17, bottom: 10, marginTop: 1 },
+                                    titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
+                                    type: 'danger',
+
+                                })
+                                return
+                            }
                             if (!IsCorrect) {
                                 changeQuestion(prev => [...prev, {
                                     ...CurrentQuestion,
@@ -439,8 +496,8 @@ const Q_A = ({ navigation, route }) => {
                                 );
                             }
                             showMessage({
-                                message: IsCorrect ? 'Amazing! You Got That Right' : 'Wrong Answer',
-                                description: 'Wait or Press This To Continue',
+                                message: IsCorrect ? 'Amazing! You Got That Right' : `${correct_ans} Is The Correct Ans`,
+                                description: 'Press This To Continue',
                                 backgroundColor: IsCorrect ? '#26c751' : '',
                                 onPress: () => {
                                     if (CurrentIndex === Questions.length) {
@@ -461,28 +518,8 @@ const Q_A = ({ navigation, route }) => {
                                 titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
                                 type: SelectedOption === CurrentQuestion.correct ? "success" : 'danger',
                                 animated: true,
-                                duration: 5000
+                                duration: 9999999999999999999999999
                             })
-                            if (CurrentIndex === Questions.length && false) {
-                                navigation.replace('hometabnavigator')
-                            } else {
-                                const s = setTimeout(() => {
-                                    if (CurrentIndex === Questions.length) {
-                                        if (CurrentLevel > route.params.level) {
-                                            navigation.replace('hometabnavigator')
-                                            changeIsOver(false)
-                                            return
-                                        } else {
-                                            changeIsOver(true)
-                                        }
-                                    } else {
-                                        changeSelectedOption(-1)
-                                        changeSelectedChoices([])
-                                        changeCurrentIndex(prev => prev + 1)
-                                    }
-                                }, 5000);
-                                changeInterval(prev => [...prev, s])
-                            }
                         }
                     }} style={{ flex: .07, backgroundColor: SelectedChoices.length > 0 ? '#26c751' : 'rgba(156, 151, 151,1)', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                         <Title style={{ fontSize: 29, color: 'white', top: 2 }}>CHECK</Title>
@@ -499,6 +536,7 @@ const Q_A = ({ navigation, route }) => {
             <Ha changeInterval={changeInterval} changeIndex={changeCurrentIndex} route={route} navigation={navigation} />
         )
     }
+
 
     return (
         <>
@@ -524,69 +562,61 @@ const Q_A = ({ navigation, route }) => {
                 </View>
                 {/* <Button title="asd" onPress={() => console.log(Total)} /> */}
                 <Pressable onPress={() => {
-                    if (SelectedOption !== -1) {
-                        !(SelectedOption === CurrentQuestion.correct) ? (() => {
-                            changeQuestion(prev => [...prev, {
-                                ...CurrentQuestion,
-                                id: String(prev.length + 1)
-                            }])
-                            ToastAndroid.showWithGravityAndOffset(
-                                "Practice Makes A Man Perfect!",
-                                ToastAndroid.SHORT,
-                                ToastAndroid.BOTTOM,
-                                25,
-                                50
-                            );
-                        })() : ' '
+                    console.log(Total - 1)
+                    console.log(CurrentIndex)
+                    if (!(SelectedOption === CurrentQuestion.correct) && CurrentIndex === Total - 1) {
                         showMessage({
-                            message: SelectedOption === CurrentQuestion.correct ? 'Amazing! You Got That Right' : 'Wrong Answer',
-                            description: 'Wait or Press This To Continue',
-                            backgroundColor: SelectedOption === CurrentQuestion.correct ? '#26c751' : '',
-                            onPress: () => {
-                                if (CurrentIndex === Questions.length) {
-                                    if (CurrentLevel > route.params.level) {
-                                        navigation.replace('hometabnavigator')
-                                        changeIsOver(false)
-                                        return
-                                    } else {
-                                        changeIsOver(true)
-                                    }
-                                } else {
-                                    changeSelectedOption(-1)
-                                    changeSelectedChoices([])
-                                    changeCurrentIndex(prev => prev + 1)
-                                }
-                            },
+                            message: `Wrong Ans`,
+                            description:`${CurrentQuestion.options[CurrentQuestion.correct].name} Is Right Ans `,
+                            hideOnPress: true,
+                            animated: true,
                             textStyle: { fontSize: 17, bottom: 10, marginTop: 1 },
                             titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
-                            type: SelectedOption === CurrentQuestion.correct ? "success" : 'danger',
-                            animated: true,
-                            duration: 5000
+                            type: 'danger',
+
                         })
-                        if (CurrentIndex === Questions.length && false) {
-                            if (CurrentLevel > props.route.level) {
-                                navigation.replace('hometabnavigator')
-                                changeIsOver(false)
-                                return
-                            }
-                            changeIsOver(true)
-                        } else {
-                            const s = setTimeout(() => {
-                                if (CurrentIndex === Questions.length) {
-                                    if (CurrentLevel > route.params.level) {
-                                        navigation.replace('hometabnavigator')
-                                        changeIsOver(false)
-                                        return
+                        return
+                    } else {
+                        if (SelectedOption !== -1) {
+                            !(SelectedOption === CurrentQuestion.correct) ? (() => {
+                                changeQuestion(prev => [...prev, {
+                                    ...CurrentQuestion,
+                                    id: String(prev.length + 1)
+                                }])
+                                ToastAndroid.showWithGravityAndOffset(
+                                    "Practice Makes A Man Perfect!",
+                                    ToastAndroid.SHORT,
+                                    ToastAndroid.BOTTOM,
+                                    25,
+                                    50
+                                );
+                            })() : ' '
+                            showMessage({
+                                message: SelectedOption === CurrentQuestion.correct ? 'Amazing! You Got That Right' : `${CurrentQuestion.options[CurrentQuestion.correct].name} Is Right Ans `,
+                                description: 'Press This To Continue',
+                                backgroundColor: SelectedOption === CurrentQuestion.correct ? '#26c751' : '',
+                                onPress: () => {
+                                    if (CurrentIndex === Questions.length) {
+                                        if (CurrentLevel > route.params.level) {
+                                            navigation.replace('hometabnavigator')
+                                            changeIsOver(false)
+                                            return
+                                        } else {
+                                            changeIsOver(true)
+                                        }
                                     } else {
-                                        changeIsOver(true)
+                                        changeSelectedOption(-1)
+                                        changeSelectedChoices([])
+                                        changeCurrentIndex(prev => prev + 1)
                                     }
-                                } else {
-                                    changeSelectedOption(-1)
-                                    changeSelectedChoices([])
-                                    changeCurrentIndex(prev => prev + 1)
-                                }
-                            }, 5000);
-                            changeInterval(prev => [...prev, s])
+                                },
+                                textStyle: { fontSize: 17, bottom: 10, marginTop: 1 },
+                                titleStyle: { fontSize: 19, marginBottom: 5, paddingTop: 10, bottom: 10 },
+                                type: SelectedOption === CurrentQuestion.correct ? "success" : 'danger',
+                                animated: true,
+                                duration: 9999999999999999999999999,
+
+                            })
                         }
                     }
                 }} style={{ flex: .07, backgroundColor: SelectedOption !== -1 ? '#26c751' : 'rgba(156, 151, 151,1)', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>

@@ -29,6 +29,7 @@ export const Register = async (Email, username, Password,) => {
             email: Email,
             username: username,
             password: Password,
+            Profile_Pic:'https://static.vecteezy.com/system/resources/previews/000/269/049/non_2x/funny-cartoon-tree-character-vector.jpg'
         }
         const url = `${base_url}all/`
         const res = await fetch(url, {

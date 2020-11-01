@@ -1,7 +1,7 @@
 // all/16/
 import { base_url } from "./config"
 
-export const Update = async (Email,username,Password,Level,Token,pk,streak) => {
+export const Update = async (Email,username,Password,Level,Token,pk,streak,Profile_Pic) => {
     try{
         console.log("Update Called ")
         console.log(Level)
@@ -10,7 +10,8 @@ export const Update = async (Email,username,Password,Level,Token,pk,streak) => {
             password:Password,
             username:username,
             CurrentLevel:Level,
-            streak:streak
+            streak:streak,
+            Profile_Pic:Profile_Pic
         }
         const url = `${base_url}all/${pk}/`
         const res = await fetch(url, {

@@ -1,7 +1,7 @@
 import React from 'react'
 import {View,Button,Text} from 'react-native'
 
-const App = (props) => {
+const App = ({navigation}) => {
     return(
         <View style={{flex:1}}>
             <Text></Text>
