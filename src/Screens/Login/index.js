@@ -30,7 +30,7 @@ const App = ({ navigation }) => {
     // noufal369@live.com
     // 123456
     const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading_tr, Profile_Pic, changeProfile_Pic] = useContext(Theme)
-    const [email, changeEmail] = useState('samarthdubey46@gmail.com')
+    const [email, changeEmail] = useState('ts@s.com')
     const [password, changePassword] = useState('password')
     const [message, changemessage] = useState('')
     const [Loading, changeLoading] = useState(false)
@@ -91,6 +91,8 @@ const App = ({ navigation }) => {
                             value={email}
                             onChangeText={text => changeEmail(text)}
                             mode="outlined"
+                            // keyboardAppearance="light"
+                            keyboardType="email-address"
                             style={{ fontFamily: fontFamily, padding: 0, backgroundColor: 'rgba(0,0,0,0)', color: text_color, fontSize: 16, width: Dimensions.get('screen').width }}
                             placeholder="Email"
                             placeholderTextColor={text_color}

@@ -227,7 +227,7 @@ export const Topic2_2 = [
     {
         id: '3',
         type: 2,
-        question: 'Translate "सा पिबति जलम"',
+        question: 'Translate "सा जलम पिबति"',
         correct: 3,
         image: Girl_Drinking_Water,
         correctSeq: [0, 2, 3],

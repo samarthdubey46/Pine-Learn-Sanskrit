@@ -12,10 +12,10 @@ import { Theme } from '../../state'
 
 const App = ({ navigation }) => {
     const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge] = useState(Theme)
-    const [email, changeEmail] = useState('ts@s.com')
-    const [UserName, changeUserName] = useState('test123')
-    const [password, changePassword] = useState('password')
-    const [password2, changePassword2] = useState('password')
+    const [email, changeEmail] = useState('')
+    const [UserName, changeUserName] = useState('')
+    const [password, changePassword] = useState('')
+    const [password2, changePassword2] = useState('')
     const [message, changemessage] = useState('')
     const [Loading, changeLoading] = useState(false)
     const text_color = Themes.text_color

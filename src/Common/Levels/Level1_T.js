@@ -77,7 +77,7 @@ export const Topic3 = [
     {
         id: '3',
         type: 2,
-        question: 'Translate "सा पिबति जलम"',
+        question: 'Translate "सा जलम पिबति"',
         correct: 3,
         image: Girl_Drinking_Water,
         correctSeq: [0, 2, 3],
@@ -226,7 +226,7 @@ export const Topic2 = [
         question: 'Translate "She Drinks water"',
         correct: 3,
         image: Girl_Drinking_Water,
-        correctSeq: [0, 2, 3],
+        correctSeq: [0, 3, 2],
         options: [
             {
                 name: 'सा',

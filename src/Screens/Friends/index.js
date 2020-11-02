@@ -194,9 +194,6 @@ const Friends = (props) => {
                         <View style={{ flex: GetLatestBadge().length <= 0 ? 1 : .55, paddingHorizontal: 20, paddingTop: 10, borderBottomWidth: GetLatestBadge().length <= 0 ? 0 : 1, borderBottomColor: 'rgba(0,0,0,.1)', }}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Title style={{ fontSize: 25 }}>{Username_Nested}</Title>
-                                <TouchableOpacity>
-                                    <Text style={{ fontSize: 16, color: '#e50071', fontWeight: 'bold', }}>EDIT</Text>
-                                </TouchableOpacity>
                             </View>
                             <Caption style={{ marginLeft: 2, marginTop: 5, fontSize: 15 }}>My-Standing : {MyStanding}</Caption>
                             <Caption style={{ marginLeft: 2, marginTop: -0, fontSize: 15 }}>{name_level}</Caption>

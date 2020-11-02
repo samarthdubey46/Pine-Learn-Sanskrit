@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Alert } from 'react-native';
 import { Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch, Divider } from 'react-native-paper';
 import {
     DrawerContentScrollView,
@@ -9,6 +9,7 @@ import {
 import Icon from 'react-native-dynamic-vector-icons'
 import { Theme } from '../../state';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { object } from 'prop-types';
 
 
 const removeFew = async (keys) => {
@@ -38,7 +39,7 @@ const getData_For_Each = async (key) => {
 
 
 const App = (props) => {
-    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak,LatestBadge, changeLatestBadge,Loading,Profile_Pic,changeProfile_Pic] = useContext(Theme)
+    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading, Profile_Pic, changeProfile_Pic] = useContext(Theme)
     const AsyncKeys = [
         "email",
         "password",
@@ -50,7 +51,7 @@ const App = (props) => {
     ]
     const [Username_Nested, changeUsername_Nested] = useState('')
     const [levelName, changelevelname] = useState()
-    const [Loading__Main,changeLoading] = useState(false)
+    const [Loading__Main, changeLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -106,7 +107,7 @@ const App = (props) => {
                             />
                         </View>
                         <View style={[styles.topRightSection, { marginTop: 5 }]}>
-                            <Text style={{ alignSelf: 'center', fontSize: 26, fontWeight: 'bold' }}> {String(Username_Nested).split(' ')[0]} </Text>
+                            <Text style={{ alignSelf: 'center', fontSize: 26, fontWeight: 'bold' }}> {Username} </Text>
                             <Caption style={{ alignSelf: 'center' }}> {levelName} </Caption>
                         </View>
                     </View>
@@ -188,20 +189,6 @@ const App = (props) => {
                         />
 
                         <Drawer.Section title="Profile">
-                            <DrawerItem
-                                icon={({ color, size }) => (
-                                    <Icon
-                                        name="settings"
-                                        type="Ionicons"
-                                        color='black'
-                                        size={size}
-                                        style={{ opacity: .7 }}
-                                    />
-                                )}
-                                // onPress={() => navigation.navigate('Settings')}
-                                label="Settings"
-                                labelStyle={{ color: 'black', fontSize: 15, opacity: .7 }}
-                            />
                             <DrawerItem
                                 icon={({ color, size }) => (
                                     <Icon

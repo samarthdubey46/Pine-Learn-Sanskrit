@@ -51,6 +51,25 @@ export const GetLeaderBoard = async (Token) => {
         console.log(`e ${e}`)
     }
 }
+export const Delete = async (Token,pk) => {
+    try{
+        const url = `${base_url}leaderboard/?ordering=-CurrentLevel`
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization':`Token ${String(Token)}`
+            }
+        })
+        const json = await res.json()
+        if(json !== null && json !== undefined){
+            return {data:json,status:true}
+        }
+    }catch(e){
+        console.log(`e ${e}`)
+    }
+}
 export const Search = async (Token,Search) => {
     try{
         const url = `${base_url}leaderboard/?search=${Search}&&ordering=-CurrentLevel`

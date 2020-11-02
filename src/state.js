@@ -125,6 +125,7 @@ const ThemeProvider = (props) => {
             console.log(res)
             changeCurrentLevel(parseInt(res.CurrentLevel))
             changeProfile_Pic(String(res.Profile_Pic))
+            changeUsername(String(res.username))
             changeLatestBadge(GetLatestBadge_With_Other(CurrentLevel))
             changeLoading(false)
         })()
