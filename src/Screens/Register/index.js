@@ -71,6 +71,7 @@ const App = ({ navigation }) => {
                         <MaterialIcons name="email" style={{ marginHorizontal: 12, marginRight: 20, opacity: .8 }} size={26} color={text_color} />
                         <TextInput
                             value={email}
+                            autoCapitalize={false}
                             onChangeText={text => changeEmail(text)}
                             mode="outlined"
                             style={{ padding: 0, backgroundColor: 'rgba(0,0,0,0)', fontSize: 16, width: Dimensions.get('screen').width }}

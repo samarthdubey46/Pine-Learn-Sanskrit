@@ -39,7 +39,7 @@ const getData_For_Each = async (key) => {
 
 
 const App = (props) => {
-    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading, Profile_Pic, changeProfile_Pic] = useContext(Theme)
+    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading_, Profile_Pic, changeProfile_Pic,Name_New,changeName_New] = useContext(Theme)
     const AsyncKeys = [
         "email",
         "password",
@@ -50,7 +50,7 @@ const App = (props) => {
         "level"
     ]
     const [Username_Nested, changeUsername_Nested] = useState('')
-    const [levelName, changelevelname] = useState()
+    const [levelName, changelevelname] = useState('')
     const [Loading__Main, changeLoading] = useState(false)
 
     useEffect(() => {
@@ -107,7 +107,7 @@ const App = (props) => {
                             />
                         </View>
                         <View style={[styles.topRightSection, { marginTop: 5 }]}>
-                            <Text style={{ alignSelf: 'center', fontSize: 26, fontWeight: 'bold' }}> {Username} </Text>
+                            <Text style={{ alignSelf: 'center', fontSize: 26, fontWeight: 'bold' }}> {Username !== undefined && Username !== null ? Username : Name_New} </Text>
                             <Caption style={{ alignSelf: 'center' }}> {levelName} </Caption>
                         </View>
                     </View>

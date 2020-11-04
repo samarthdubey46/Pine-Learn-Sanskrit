@@ -29,9 +29,9 @@ const RemoveData = async (key) => {
 const App = ({ navigation }) => {
     // noufal369@live.com
     // 123456
-    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading_tr, Profile_Pic, changeProfile_Pic] = useContext(Theme)
-    const [email, changeEmail] = useState('ts@s.com')
-    const [password, changePassword] = useState('password')
+    const [Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading_, Profile_Pic, changeProfile_Pic,Name_New,changeName_New] = useContext(Theme)
+    const [email, changeEmail] = useState('')
+    const [password, changePassword] = useState('')
     const [message, changemessage] = useState('')
     const [Loading, changeLoading] = useState(false)
     const backgroundColor = Themes.backgroundColor
@@ -70,7 +70,7 @@ const App = ({ navigation }) => {
         // changeStreak(parseInt(res.streak))
         await storeData('log', 'yes')
         // await storeData('last_update',String(d))
-
+        changeName_New(obj.username)
         changeIsLogged(true)
         changeCurrentLevel(parseInt(res['CurrentLevel']) !== undefined && parseInt(res['CurrentLevel']) !== null ? parseInt(res['CurrentLevel']) : 1)
         changeLoading(false)
@@ -95,6 +95,7 @@ const App = ({ navigation }) => {
                             keyboardType="email-address"
                             style={{ fontFamily: fontFamily, padding: 0, backgroundColor: 'rgba(0,0,0,0)', color: text_color, fontSize: 16, width: Dimensions.get('screen').width }}
                             placeholder="Email"
+
                             placeholderTextColor={text_color}
                         />
                     </View>

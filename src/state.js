@@ -49,7 +49,7 @@ const ThemeProvider = (props) => {
     const [LatestBadge, changeLatestBadge] = useState({ data: { image: ' ' } })
     const [Loading, changeLoading] = useState(false)
     const [Profile_Pic, changeProfile_Pic] = useState(' ')
-
+    const [Name_New,changeName_New] = useState(-1)
 
     const Triggers_Of_Badge = [
         { level: 0, badge: 'https://static.vecteezy.com/system/resources/previews/000/269/049/non_2x/funny-cartoon-tree-character-vector.jpg' },
@@ -170,7 +170,7 @@ const ThemeProvider = (props) => {
 
 
     return (
-        <Theme.Provider value={[Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading, Profile_Pic, changeProfile_Pic]}>
+        <Theme.Provider value={[Themes, changeTheme, IsLogged, changeIsLogged, CurrentLevel, changeCurrentLevel, Triggers_Of_Badge, Username, changeUsername, Email, changeEmail_Main, Streak, changeStreak, LatestBadge, changeLatestBadge, Loading, Profile_Pic, changeProfile_Pic,Name_New,changeName_New]}>
             {props.children}
         </Theme.Provider>
     )

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, Button, Text, FlatList, Dimensions, StyleSheet, Image } from 'react-native'
+import { View, Button, Text, FlatList, Dimensions, StyleSheet, Image,Pressable,ToastAndroid } from 'react-native'
 import Data from '../../Common/data'
 import Icon from 'react-native-dynamic-vector-icons'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
@@ -17,6 +17,18 @@ const getData = async () => {
         console.log(e)
     }
 }
+const showToastWithGravityAndOffset = (message) => {
+    ToastAndroid.showWithGravityAndOffset(
+        message,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        20,
+        150
+    );
+};
+
+
+
 
 
 const One_Item = ({ name, type, opa, Onpress, color, text, navigation, question, topic, CanGo, Level_No }) => {
@@ -31,7 +43,7 @@ const One_Item = ({ name, type, opa, Onpress, color, text, navigation, question,
     })
 
     return (
-        <TouchableOpacity disabled={!CanGo} onPress={() => CanGo && navigation.navigate('Q_A', { topic: topic, question: question, level: Level_No })} style={{ alignItems: 'center', justifyContent: 'center', width: 100, marginHorizontal: 10, }}>
+        <Pressable  onPress={() => CanGo ? navigation.navigate('Q_A', { topic: topic, question: question, level: Level_No }) : showToastWithGravityAndOffset(`The Level Will Open After You Compete ${Level_No - 1}`)} style={{ alignItems: 'center', justifyContent: 'center', width: 100, marginHorizontal: 10, }}>
             <View style={{ flex: .9, height: 100, justifyContent: 'center', alignItems: 'center', borderRadius: 50, borderWidth: 1, width: 100, borderColor: 'rgba(0,0,0,.2)', backgroundColor: 'white', opacity: op1 }}>
                 {ImageShown !== null ? (
                     <Image
@@ -42,7 +54,7 @@ const One_Item = ({ name, type, opa, Onpress, color, text, navigation, question,
                 ) : (<Icon name={name} type={type} color={color} size={60} style={{ padding: 10, opacity: opa }} />)}
             </View>
             <Text style={{ fontSize: 13, marginTop: 5, fontWeight: 'bold', }}>{text} </Text>
-        </TouchableOpacity>
+        </Pressable>
     )
 }
 
@@ -58,15 +70,15 @@ const One_Level = ({ item, navigation, Themes, CurrentLevel }) => {
             return (
                 <View style={{ borderBottomWidth: 0, borderBottomColor: 'rgba(0,0,0,.2)', flexDirection: 'column-reverse' }}>
                     <View style={styles.onLevelView}>
-                        <One_Item text={Level[3].Level} CanGo={CurrentLevel >= Level[3].level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} Level_No={Level[3].level} name="egg" opa={CurrentLevel >= Level[3].level ? 1 : .6} color={CurrentLevel > Level[3].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
-                        <One_Item text={Level[4].Level} CanGo={CurrentLevel >= Level[4].level} navigation={navigation} topic={Level[4].name} question={Level[4].Question} Level_No={Level[4].level} name="egg" opa={CurrentLevel >= Level[4].level ? .8 : .6} color={CurrentLevel > Level[4].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                        <One_Item text={Level[3].Level} CanGo={CurrentLevel >= Level[3].level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} Level_No={Level[3].level} name="egg" opa={CurrentLevel >= Level[3].level ? 1 : .4} color={CurrentLevel > Level[3].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                        <One_Item text={Level[4].Level} CanGo={CurrentLevel >= Level[4].level} navigation={navigation} topic={Level[4].name} question={Level[4].Question} Level_No={Level[4].level} name="egg" opa={CurrentLevel >= Level[4].level ? .8 : .4} color={CurrentLevel > Level[4].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
                     </View>
                     <View style={styles.onLevelView}>
                     </View>
                     <View style={[styles.onLevelView, { paddingBottom: 10 }]}>
-                        <One_Item text={Level[0].Level} CanGo={CurrentLevel >= Level[0].level} navigation={navigation} topic={Level[0].name} question={Level[0].Question} Level_No={Level[0].level} name="egg-easter" opa={CurrentLevel >= Level[0].level ? 1 : .6} color={CurrentLevel > Level[0].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
-                        <One_Item text={Level[1].Level} CanGo={CurrentLevel >= Level[1].level} navigation={navigation} topic={Level[1].name} question={Level[1].Question} Level_No={Level[1].level} name="shield" opa={CurrentLevel >= Level[1].level ? 1 : .6} color={CurrentLevel > Level[1].level ? '#26bf4f' : 'black'} type="FontAwesome" />
-                        <One_Item text={Level[2].Level} CanGo={CurrentLevel >= Level[2].level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} Level_No={Level[2].level} name="Trophy" opa={CurrentLevel >= Level[2].level ? 1 : .6} color={CurrentLevel > Level[2].level ? '#e50071' : 'black'} type="AntDesign" />
+                        <One_Item text={Level[0].Level} CanGo={CurrentLevel >= Level[0].level} navigation={navigation} topic={Level[0].name} question={Level[0].Question} Level_No={Level[0].level} name="egg-easter" opa={CurrentLevel >= Level[0].level ? 1 : .4} color={CurrentLevel > Level[0].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                        <One_Item text={Level[1].Level} CanGo={CurrentLevel >= Level[1].level} navigation={navigation} topic={Level[1].name} question={Level[1].Question} Level_No={Level[1].level} name="shield" opa={CurrentLevel >= Level[1].level ? 1 : .4} color={CurrentLevel > Level[1].level ? '#26bf4f' : 'black'} type="FontAwesome" />
+                        <One_Item text={Level[2].Level} CanGo={CurrentLevel >= Level[2].level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} Level_No={Level[2].level} name="Trophy" opa={CurrentLevel >= Level[2].level ? 1 : .4} color={CurrentLevel > Level[2].level ? '#e50071' : 'black'} type="AntDesign" />
                     </View>
                 </View>
             )
@@ -76,16 +88,16 @@ const One_Level = ({ item, navigation, Themes, CurrentLevel }) => {
         return (
             <View style={{ borderBottomWidth: 0, borderBottomColor: 'rgba(0,0,0,.2)' }}>
                 <View style={styles.onLevelView}>
-                    <One_Item text={Level[0].Level} CanGo={CurrentLevel >= Level[0].level} navigation={navigation} topic={Level[0].name} question={Level[0].Question} Level_No={Level[0].level} name="egg" opa={CurrentLevel >= Level[0].level ? 1 : .6} color={CurrentLevel > Level[0].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                    <One_Item text={Level[0].Level} CanGo={CurrentLevel >= Level[0].level} navigation={navigation} topic={Level[0].name} question={Level[0].Question} Level_No={Level[0].level} name="egg" opa={CurrentLevel >= Level[0].level ? 1 : .4} color={CurrentLevel > Level[0].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
                     <One_Item text={Level[1].Level} CanGo={CurrentLevel >= Level[1].level} navigation={navigation} topic={Level[1].name} question={Level[1].Question} Level_No={Level[1].level} name="egg" opa={CurrentLevel >= Level[1].level ? .8 : .6} color={CurrentLevel > Level[1].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
 
                 </View>
                 <View style={styles.onLevelView}>
                 </View>
                 <View style={[styles.onLevelView, { paddingBottom: 10 }]}>
-                    <One_Item text={Level[2].Level} CanGo={CurrentLevel >= Level[2].level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} Level_No={Level[2].level} name="egg-easter" opa={CurrentLevel >= Level[2].level ? 1 : .6} color={CurrentLevel > Level[2].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
-                    <One_Item text={Level[3].Level} CanGo={CurrentLevel >= Level[3].level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} Level_No={Level[3].level} name="shield" opa={CurrentLevel >= Level[3].level ? 1 : .6} color={CurrentLevel > Level[3].level ? '#26bf4f' : 'black'} type="FontAwesome" />
-                    <One_Item text={Level[4].Level} CanGo={CurrentLevel >= Level[4].level} navigation={navigation} topic={Level[4].name} question={Level[4].Question} Level_No={Level[4].level} name="Trophy" opa={CurrentLevel >= Level[4].level ? 1 : .6} color={CurrentLevel > Level[4].level ? '#e50071' : 'black'} type="AntDesign" />
+                    <One_Item text={Level[2].Level} CanGo={CurrentLevel >= Level[2].level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} Level_No={Level[2].level} name="egg-easter" opa={CurrentLevel >= Level[2].level ? 1 : .4} color={CurrentLevel > Level[2].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                    <One_Item text={Level[3].Level} CanGo={CurrentLevel >= Level[3].level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} Level_No={Level[3].level} name="shield" opa={CurrentLevel >= Level[3].level ? 1 : .4} color={CurrentLevel > Level[3].level ? '#26bf4f' : 'black'} type="FontAwesome" />
+                    <One_Item text={Level[4].Level} CanGo={CurrentLevel >= Level[4].level} navigation={navigation} topic={Level[4].name} question={Level[4].Question} Level_No={Level[4].level} name="Trophy" opa={CurrentLevel >= Level[4].level ? 1 : .4} color={CurrentLevel > Level[4].level ? '#e50071' : 'black'} type="AntDesign" />
                 </View>
             </View>
         )
@@ -94,15 +106,15 @@ const One_Level = ({ item, navigation, Themes, CurrentLevel }) => {
         return (
             <View style={{ borderBottomWidth: 0, borderBottomColor: 'rgba(0,0,0,.2)' }}>
                 <View style={styles.onLevelView}>
-                    <One_Item text={Level[0].Level} CanGo={CurrentLevel >= Level[0].level} navigation={navigation} topic={Level[0].name} question={Level[0].Question} Level_No={Level[0].level} name="egg" opa={CurrentLevel >= Level[0].level ? 1 : .6} color={CurrentLevel > Level[0].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
-                    <One_Item text={Level[1].Level} CanGo={CurrentLevel >= Level[1].level} navigation={navigation} topic={Level[1].name} question={Level[1].Question} Level_No={Level[1].level} name="egg" opa={CurrentLevel >= Level[1].level ? 1 : .6} color={CurrentLevel > Level[1].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                    <One_Item text={Level[0].Level} CanGo={CurrentLevel >= Level[0].level} navigation={navigation} topic={Level[0].name} question={Level[0].Question} Level_No={Level[0].level} name="egg" opa={CurrentLevel >= Level[0].level ? 1 : .4} color={CurrentLevel > Level[0].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                    <One_Item text={Level[1].Level} CanGo={CurrentLevel >= Level[1].level} navigation={navigation} topic={Level[1].name} question={Level[1].Question} Level_No={Level[1].level} name="egg" opa={CurrentLevel >= Level[1].level ? 1 : .4} color={CurrentLevel > Level[1].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
 
                 </View>
                 <View style={styles.onLevelView}>
                 </View>
                 <View style={[styles.onLevelView, { paddingBottom: 10 }]}>
-                    <One_Item text={Level[2].Level} CanGo={CurrentLevel >= Level[2].level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} Level_No={Level[2].level} name="egg-easter" opa={CurrentLevel >= Level[2].level ? 1 : .6} color={CurrentLevel > Level[2].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
-                    <One_Item text={Level[3].Level} CanGo={CurrentLevel >= Level[3].level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} Level_No={Level[3].level} name="shield" opa={CurrentLevel >= Level[3].level ? 1 : .6} color={CurrentLevel > Level[3].level ? '#26bf4f' : 'black'} type="FontAwesome" />
+                    <One_Item text={Level[2].Level} CanGo={CurrentLevel >= Level[2].level} navigation={navigation} topic={Level[2].name} question={Level[2].Question} Level_No={Level[2].level} name="egg-easter" opa={CurrentLevel >= Level[2].level ? 1 : .4} color={CurrentLevel > Level[2].level ? '#37a354' : 'black'} type="MaterialCommunityIcons" />
+                    <One_Item text={Level[3].Level} CanGo={CurrentLevel >= Level[3].level} navigation={navigation} topic={Level[3].name} question={Level[3].Question} Level_No={Level[3].level} name="shield" opa={CurrentLevel >= Level[3].level ? 1 : .4} color={CurrentLevel > Level[3].level ? '#26bf4f' : 'black'} type="FontAwesome" />
                 </View>
             </View>
         )

@@ -27,7 +27,7 @@ const Badges = (props) => {
         return (
             <Surface style={{ elevation: 1, borderRightWidth: 1, borderRightColor: 'rgba(0,0,0,.1)', borderLeftWidth: 1, borderLeftColor: 'rgba(0,0,0,.1)', marginBottom: 15, borderWidth: item.badge === Profile_Pic ? 1 : 0, borderColor: item.badge === Profile_Pic ? '#00b7ff' : 'rgba(0,0,0,.1)' }}>
                 {/* <Button title="asd" onPress={() => console.log( item.Level_Open)}/> */}
-                <Pressable onPress={() => CurrentLevel > item.level ? changeProfile_Pic(item.badge) : showToastWithGravityAndOffset(`This Badge Will open in Level ${item.Level_Open} `)}>
+                <Pressable onPress={() => CurrentLevel > item.level ? changeProfile_Pic(item.badge) : showToastWithGravityAndOffset(`This Avatar Will open in Level ${item.level} `)}>
                     <ImageBackground resizeMode="contain" style={{ height: 120, width: WIDTH / 3.2, marginHorizontal: 2.2 }} source={{ uri: CurrentLevel > item.level ? item.badge : Lock }}>
                         {CurrentLevel <= item.level && <Text style={{fontSize:10,alignSelf:'center'}}>Ready after  Level {item.level}</Text>}
                     </ImageBackground>
