@@ -1,15 +1,14 @@
 {
   "expo": {
-    "name": "PINE",
-    "slug": "PINE",
-    "version": "1.0.0",
+    "name": "Pine",
+    "slug": "Pine",
+    "version": "2.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./Assets/splash.png",
+      "backgroundColor": "#FFFFFF"
     },
+    "icon": "./Assets/splash.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -20,13 +19,17 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+      "package": "com.samarth_dubey.Pine",
+      "permissions": [],
+      "versionCode": 2,
+      "splash": {
+        "image": "./Assets/splash.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "icon": "./Assets/splash.png"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./Assets/splash.png"
     }
   }
 }
